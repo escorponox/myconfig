@@ -87,6 +87,7 @@ if exists("g:gui_oni")
 endif
 
 let g:NERDTreeQuitOnOpen = 1
+let g:NERDTreeShowHidden=1
 
 set autoindent
 set autoread
@@ -107,6 +108,7 @@ set number
 set path+=src
 set shiftwidth=2
 set softtabstop=2
+set tabstop=2
 set splitright
 set timeoutlen=2000
 set ttimeoutlen=0
@@ -189,7 +191,7 @@ nnoremap ,m :NERDTreeToggle<CR>
 
 " info windows
 nnoremap ,o :lopen<CR>
-nnoremap ,p :lclose<CR>:cclose<CR>:pclose
+nnoremap ,p :lclose<CR>:cclose<CR>:pclose<CR>
 
 " buffers
 nnoremap ,bb :b#<CR>
