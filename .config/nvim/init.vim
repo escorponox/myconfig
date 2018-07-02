@@ -105,6 +105,7 @@ set nobackup
 set noswapfile
 set noshowmode
 set number
+set relativenumber
 set path+=src
 set shiftwidth=2
 set softtabstop=2
