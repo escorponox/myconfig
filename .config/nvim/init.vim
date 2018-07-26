@@ -24,10 +24,11 @@ Plug 'scrooloose/nerdtree'
 
 call plug#end()
 
-let g:ale_linters = {'javascript': ['eslint']}
+let g:ale_linters = {'javascript': ['eslint'], 'jsx': ['eslint']}
 let g:ale_sign_column_always = 1
 let g:ale_fixers = {}
 let g:ale_fixers['javascript'] = ['prettier', 'eslint']
+let g:ale_fixers['json'] = ['prettier']
 let g:ale_fix_on_save = 1
 let g:ale_javascript_prettier_use_local_config = 1
 let g:ale_sign_error = '!!'
@@ -75,19 +76,16 @@ command! -nargs=* Rg
 colorscheme onedark
 
 let g:airline_theme='onedark'
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 
 let g:airline#extensions#tabline#left_sep = '=='
 let g:airline#extensions#tabline#left_alt_sep = '|'
 
-let g:airline_powerline_fonts = 1
-
-if exists("g:gui_oni")
-  let g:airline_powerline_fonts = 0
-endif
+let g:airline_powerline_fonts = 0
 
 let g:NERDTreeQuitOnOpen = 1
 let g:NERDTreeShowHidden=1
+let g:NERDTreeWinSize=60
 
 set autoindent
 set autoread
@@ -128,6 +126,9 @@ augroup END
 hi CursorLine ctermfg=NONE ctermbg=NONE
 hi CursorLineNR ctermfg=black ctermbg=yellow
 set cursorline
+
+" ======= duplicate line command ======
+command! -count=0 DuplicateLine :-<count>,-0t.
 
 " ============================== MAPPINGS ==============================
 let mapleader = " "
@@ -221,3 +222,5 @@ nmap <Leader>hk <Plug>GitGutterPrevHunk
 nmap <Leader>hu <Plug>GitGutterUndoHunk
 nmap <Leader>hi <Plug>GitGutterPreviewHunk
 
+"duplicate
+nnoremap ,a :DuplicateLine<space>
