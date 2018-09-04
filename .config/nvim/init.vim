@@ -215,6 +215,7 @@ nnoremap ,x :only<CR>
 nnoremap ,tg :tabnew<CR>
 nnoremap ,tt :tabn<CR>
 nnoremap ,tr :tabc<CR>
+nnoremap ,tp :tabp<CR>
 
 " hunks
 nmap <Leader>hj <Plug>GitGutterNextHunk
