@@ -144,7 +144,7 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    Key_Enter,        Key_Y, Key_U, Key_I,     Key_O,         Key_P,         Key_Equals,
                      Key_H, Key_J, Key_K,     Key_L,         Key_Semicolon, Key_Quote,
    Key_LeftGui,      Key_N, Key_M, Key_Comma, Key_Period,    Key_Slash,     Key_Minus,
-   Key_RightControl, Key_RightAlt, Key_Spacebar, Key_RightShift,
+   Key_LeftGui,      Key_RightAlt, Key_Spacebar, Key_RightShift,
    ShiftToLayer(FUNCTION)),
 
 
@@ -164,16 +164,16 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    ___),
 
   [FUNCTION] =  KEYMAP_STACKED
-  (___,                     Key_F1,                         Key_F2,                       Key_F3,               Key_F4,               Key_F5,      XXX,
-   Key_PrintScreen,         LGUI(LSHIFT(Key_LeftArrow)),    LGUI(LSHIFT(Key_RightArrow)), LGUI(Key_LeftArrow),  LGUI(Key_RightArrow), ___,         ___,
-   Key_Home,                M(ARROW),                       M(ARROW_OBJ),                 M(ARROW_BLOCK),       M(EXPORT_CONST),      LGUI(Key_Z),
-   Key_End,                 LGUI(LSHIFT(Key_Z)),            ___,                          ___,                  M(IMPORT_FROM),       ___,         ___,
+  (___,                     Key_F1,                         Key_F2,                       Key_F3,               Key_F4,               Key_F5,                      XXX,
+   Key_PrintScreen,         LGUI(LSHIFT(Key_LeftArrow)),    LGUI(LSHIFT(Key_RightArrow)), LGUI(Key_LeftArrow),  LGUI(Key_RightArrow), ___,                         ___,
+   Key_Home,                ___,                            ___,                          ___,                  ___,                  LGUI(Key_Z),
+   Key_End,                 ___,                            ___,                          ___,                  ___,                  LGUI(LSHIFT(Key_Z)),         ___,
    ShiftToLayer(CSHIFTALT), Key_Delete,                     ShiftToLayer(CALT),           ShiftToLayer(CSHIFT),
    ___,
 
    Consumer_ScanPreviousTrack, Key_F6,                 Key_F7,                   Key_F8,                   Key_F9,               Key_F10,               Key_F11,
    Consumer_PlaySlashPause,    Consumer_ScanNextTrack, Key_LeftCurlyBracket,     Key_RightCurlyBracket,    Key_LeftBracket,      Key_RightBracket,      Key_F12,
-                               Key_LeftArrow,          Key_DownArrow,            Key_UpArrow,              Key_RightArrow,       ___,                   Key_Backslash,
+                               Key_LeftArrow,          Key_DownArrow,            Key_UpArrow,              Key_RightArrow,       M(ARROW),              Key_Backslash,
    ___,                        ___,                    LSHIFT(Key_9),            LSHIFT(Key_0),            ___,                  ___,                   Key_Pipe,
    ___,                        ___,                    Key_Enter,                ___,
    ___),
