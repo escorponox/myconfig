@@ -21,6 +21,9 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+endif
 
 call plug#end()
 
@@ -30,11 +33,15 @@ let g:ale_fixers = {}
 let g:ale_fixers['javascript'] = ['prettier', 'eslint']
 let g:ale_fixers['json'] = ['prettier']
 let g:ale_fixers['scss'] = ['prettier']
+let g:ale_fixers['css'] = ['prettier']
 let g:ale_fix_on_save = 1
 let g:ale_javascript_prettier_use_local_config = 1
 let g:ale_sign_error = '!!'
 let g:ale_sign_warning = '--'
 
+if !exists("g:gui_oni")
+  let g:deoplete#enable_at_startup = 1
+endif
 
 filetype plugin indent on
 syntax on
@@ -92,6 +99,7 @@ set autoindent
 set autoread
 set background=dark
 set backspace=indent,eol,start
+set clipboard+=unnamedplus
 set expandtab
 set hidden
 set hlsearch
@@ -226,3 +234,6 @@ nmap <Leader>hi <Plug>GitGutterPreviewHunk
 
 "duplicate
 nnoremap ,a :DuplicateLine<space>
+
+"complete on enter, fuck auto new line?
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>" : "\<CR>")
