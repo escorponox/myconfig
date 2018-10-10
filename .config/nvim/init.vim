@@ -21,11 +21,25 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-endif
+" if has('nvim')
+"   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" endif
+
+Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
+Plug 'ncm2/ncm2-path'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 
 call plug#end()
+
+autocmd BufEnter * call ncm2#enable_for_buffer()
+set completeopt=noinsert,menuone,noselect
+
+let g:ncm2_path#cwdpath_source_override = {'enable': 0}
+let g:ncm2_path#rootpath_source_override = {'enable': 0}
 
 let g:ale_linters = {'javascript': ['eslint'], 'jsx': ['eslint'] }
 let g:ale_sign_column_always = 1
@@ -39,9 +53,18 @@ let g:ale_javascript_prettier_use_local_config = 1
 let g:ale_sign_error = '!!'
 let g:ale_sign_warning = '--'
 
-if !exists("g:gui_oni")
-  let g:deoplete#enable_at_startup = 1
-endif
+let g:LanguageClient_serverCommands = {
+  \ 'typescript': ['javascript-typescript-stdio'],
+  \ 'javascript': ['javascript-typescript-stdio'],
+  \ 'javascript.jsx': ['javascript-typescript-stdio']
+  \ }
+
+highlight ALEErrorSign ctermfg=DarkMagenta ctermbg=15
+highlight ALEWarningSign ctermfg=26 ctermbg=15
+
+" if !exists("g:gui_oni")
+"   let g:deoplete#enable_at_startup = 1
+" endif
 
 filetype plugin indent on
 syntax on
@@ -78,10 +101,10 @@ command! -nargs=* Rg
 " ============================== SETTINGS ==============================
 
 " colorscheme
-"let g:gruvbox_contrast_dark="hard"
-"let g:gruvbox_contrast_light="hard"
-"colorscheme gruvbox
-colorscheme onedark
+" let g:gruvbox_contrast_dark="hard"
+" let g:gruvbox_contrast_light="hard"
+colorscheme gruvbox
+" colorscheme onedark
 
 let g:airline_theme='onedark'
 let g:airline#extensions#tabline#enabled = 0
@@ -123,6 +146,7 @@ set ttimeoutlen=0
 set wildmenu
 set list!
 set updatetime=100
+set shortmess+=c
 
 " reload changed file on focus, buffer enter
 " helps if file was changed externally.
@@ -237,3 +261,7 @@ nnoremap ,a :DuplicateLine<space>
 
 "complete on enter, fuck auto new line?
 inoremap <expr> <CR> (pumvisible() ? "\<c-y>" : "\<CR>")
+
+nnoremap <silent> K :call LanguageClient#textDocument_references()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
