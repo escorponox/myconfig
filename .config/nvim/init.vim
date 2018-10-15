@@ -38,8 +38,8 @@ call plug#end()
 autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
 
-let g:ncm2_path#cwdpath_source_override = {'enable': 0}
-let g:ncm2_path#rootpath_source_override = {'enable': 0}
+call ncm2#override_source('cwdpath', {'enable': 0})
+call ncm2#override_source('rootpath', {'enable': 0})
 
 let g:ale_linters = {'javascript': ['eslint'], 'jsx': ['eslint'] }
 let g:ale_sign_column_always = 1
@@ -59,8 +59,7 @@ let g:LanguageClient_serverCommands = {
   \ 'javascript.jsx': ['javascript-typescript-stdio']
   \ }
 
-highlight ALEErrorSign ctermfg=DarkMagenta ctermbg=15
-highlight ALEWarningSign ctermfg=26 ctermbg=15
+let g:LanguageClient_diagnosticsEnable = 1
 
 " if !exists("g:gui_oni")
 "   let g:deoplete#enable_at_startup = 1
@@ -69,7 +68,7 @@ highlight ALEWarningSign ctermfg=26 ctermbg=15
 filetype plugin indent on
 syntax on
 
-let g:user_emmet_leader_key='<C-E>'
+let g:user_emmet_leader_key='<C-B>'
 
 "================color====================
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
@@ -259,8 +258,10 @@ nmap <Leader>hi <Plug>GitGutterPreviewHunk
 "duplicate
 nnoremap ,a :DuplicateLine<space>
 
-"complete on enter, fuck auto new line?
-inoremap <expr> <CR> (pumvisible() ? "\<c-y>" : "\<CR>")
+"complete
+inoremap <C-z> <C-y><C-e>
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 nnoremap <silent> K :call LanguageClient#textDocument_references()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
