@@ -165,7 +165,7 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
 
   [FUNCTION] =  KEYMAP_STACKED
   (___,                     Key_F1,                         Key_F2,                       Key_F3,               Key_F4,               Key_F5,              XXX,
-   Key_PrintScreen,         LGUI(LSHIFT(Key_LeftArrow)),    LGUI(LSHIFT(Key_RightArrow)), LGUI(Key_LeftArrow),  LGUI(Key_RightArrow), ___,                 ___,
+   Key_PrintScreen,         ___,                            ___,                          ___,                  ___,                  ___,                 ___,
    Key_Home,                ___,                            ___,                          ___,                  ___,                  LGUI(Key_Z),
    Key_End,                 ___,                            ___,                          ___,                  ___,                  LGUI(LSHIFT(Key_Z)), ___,
    ShiftToLayer(CSHIFTALT), Key_Delete,                     ShiftToLayer(CALT),           ShiftToLayer(CSHIFT),

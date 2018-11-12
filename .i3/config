@@ -57,8 +57,8 @@ bindsym $mod+d exec j4-dmenu-desktop
 bindsym $mod+Tab exec "rofi -show window"
 
 # change focus
-bindsym $mod+j focus down
-bindsym $mod+k focus up
+bindsym $mod+j focus output left
+bindsym $mod+k focus output right
 bindsym $mod+l focus right
 bindsym $mod+h focus left
 
@@ -74,8 +74,8 @@ bindsym --whole-window --border $mod+button5 focus right
 bindsym button4 nop
 bindsym button5 nop
 
-bindsym $mod+Mod1+h workspace prev
-bindsym $mod+Mod1+l workspace next
+bindsym $mod+Mod1+h focus output left
+bindsym $mod+Mod1+l focus output right
 bindsym $mod+Mod1+j workspace prev_on_output
 bindsym $mod+Mod1+k workspace next_on_output
 

@@ -4,6 +4,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'morhetz/gruvbox'
 Plug 'joshdick/onedark.vim'
+Plug 'rakr/vim-one'
 Plug 'w0rp/ale'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
@@ -21,10 +22,6 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
-" if has('nvim')
-"   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" endif
-
 Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2-path'
@@ -59,16 +56,13 @@ let g:LanguageClient_serverCommands = {
   \ 'javascript.jsx': ['javascript-typescript-stdio']
   \ }
 
-let g:LanguageClient_diagnosticsEnable = 1
-
-" if !exists("g:gui_oni")
-"   let g:deoplete#enable_at_startup = 1
-" endif
+let g:LanguageClient_diagnosticsEnable = 0
 
 filetype plugin indent on
 syntax on
 
 let g:user_emmet_leader_key='<C-B>'
+let g:user_emmet_mode='a'
 
 "================color====================
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
@@ -104,6 +98,7 @@ command! -nargs=* Rg
 " let g:gruvbox_contrast_light="hard"
 colorscheme gruvbox
 " colorscheme onedark
+" colorscheme one
 
 let g:airline_theme='onedark'
 let g:airline#extensions#tabline#enabled = 0
@@ -146,6 +141,7 @@ set wildmenu
 set list!
 set updatetime=100
 set shortmess+=c
+set showtabline=2
 
 " reload changed file on focus, buffer enter
 " helps if file was changed externally.
@@ -171,6 +167,7 @@ nnoremap ,rg :%s//g<Left><Left>
 
 " find file
 nnoremap ,ff :GFiles<CR>
+nnoremap ,F :Files<CR>
 " find fuzzy
 nnoremap ,fg :Rg 
 " find buffer
@@ -229,8 +226,8 @@ nnoremap ,p :lclose<CR>:cclose<CR>:pclose<CR>
 
 " buffers
 nnoremap ,bb :b#<CR>
-nnoremap ,bj :bprev<CR>
-nnoremap ,bk :bnext<CR>
+nnoremap ,bp :bp<CR>
+nnoremap ,bn :bn<CR>
 " nnoremap ,e :buffers<CR>:buffer<Space>
 
 " windows
@@ -259,10 +256,14 @@ nmap <Leader>hi <Plug>GitGutterPreviewHunk
 nnoremap ,a :DuplicateLine<space>
 
 "complete
-inoremap <C-z> <C-y><C-e>
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
+" language server protocol
 nnoremap <silent> K :call LanguageClient#textDocument_references()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
+" ale errors navigation
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
