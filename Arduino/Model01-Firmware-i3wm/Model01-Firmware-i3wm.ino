@@ -163,7 +163,7 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
   (___,                     LGUI(LSHIFT(Key_1)),            LGUI(LSHIFT(Key_2)),          LGUI(LSHIFT(Key_3)),  LGUI(Key_M),          Key_PcApplication,   XXX,
    Key_PrintScreen,         LGUI(LSHIFT(Key_Q)),            LGUI(LSHIFT(Key_W)),          LGUI(LSHIFT(Key_E)),  LGUI(Key_R),          LGUI(Key_T),         LGUI(Key_Enter),
    LGUI(Key_Tab),           LGUI(Key_A),                    LGUI(Key_S),                  LGUI(Key_D),          LGUI(LSHIFT(Key_D)),  LGUI(Key_Z),
-   Key_End,                 LGUI(Key_Y),                    LGUI(Key_U),                  LGUI(Key_C),          LGUI(Key_V),          LGUI(LSHIFT(Key_Z)), ___,
+   Key_End,                 LGUI(Key_Y),                    LGUI(Key_U),                  LGUI(Key_O),          LGUI(Key_P),          LGUI(LSHIFT(Key_Z)), ___,
    ShiftToLayer(CSHIFTALT), Key_Delete,                     ShiftToLayer(CALT),           ShiftToLayer(CSHIFT),
    ___,
 
