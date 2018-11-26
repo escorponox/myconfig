@@ -42,7 +42,7 @@ TEXT
 # JSON for i3bar
 
  [  
-    { "full_text" : "  ${exec ~/.i3/xkblayout-state print %s}"}, 
+    { "full_text" : "  ${exec ~/.config/i3/xkblayout-state print %s}"}, 
     { "full_text" : "  ${downspeed enp0s31f6}" , "color" :"\#00ff00" },
     { "full_text" : "  ${upspeed enp0s31f6}" , "color" :"\#ff0000" },
     { "full_text" : "eth ${addr enp0s31f6}" },
