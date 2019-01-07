@@ -4,8 +4,6 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'morhetz/gruvbox'
 Plug 'joshdick/onedark.vim'
-Plug 'rakr/vim-one'
-Plug 'w0rp/ale'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
@@ -22,41 +20,13 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
-Plug 'ncm2/ncm2-path'
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 
 call plug#end()
 
-autocmd BufEnter * call ncm2#enable_for_buffer()
-set completeopt=noinsert,menuone,noselect
+call coc#add_extension('coc-json', 'coc-highlight', 'coc-tsserver', 'coc-eslint', 'coc-prettier')
 
-call ncm2#override_source('cwdpath', {'enable': 0})
-call ncm2#override_source('rootpath', {'enable': 0})
-
-let g:ale_linters = {'javascript': ['eslint'], 'jsx': ['eslint'] }
-let g:ale_sign_column_always = 1
-let g:ale_fixers = {}
-let g:ale_fixers['javascript'] = ['prettier', 'eslint']
-let g:ale_fixers['json'] = ['prettier']
-let g:ale_fixers['scss'] = ['prettier']
-let g:ale_fixers['css'] = ['prettier']
-let g:ale_fix_on_save = 1
-let g:ale_javascript_prettier_use_local_config = 1
-let g:ale_sign_error = '!!'
-let g:ale_sign_warning = '--'
-
-let g:LanguageClient_serverCommands = {
-  \ 'typescript': ['javascript-typescript-stdio'],
-  \ 'javascript': ['javascript-typescript-stdio'],
-  \ 'javascript.jsx': ['javascript-typescript-stdio']
-  \ }
-
-let g:LanguageClient_diagnosticsEnable = 0
+"set completeopt=noinsert,menuone,noselect
 
 filetype plugin indent on
 syntax on
@@ -94,19 +64,18 @@ command! -nargs=* Rg
 " ============================== SETTINGS ==============================
 
 " colorscheme
-" let g:gruvbox_contrast_dark="hard"
-" let g:gruvbox_contrast_light="hard"
 colorscheme gruvbox
-" colorscheme onedark
-" colorscheme one
 
 let g:airline_theme='onedark'
-let g:airline#extensions#tabline#enabled = 0
+let g:airline#extensions#tabline#enabled = 1
 
-let g:airline#extensions#tabline#left_sep = '=='
+let g:airline#extensions#tabline#left_sep = '='
 let g:airline#extensions#tabline#left_alt_sep = '|'
 
 let g:airline_powerline_fonts = 0
+
+let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 
 let g:NERDTreeQuitOnOpen = 1
 let g:NERDTreeShowHidden=1
@@ -265,6 +234,6 @@ nnoremap <silent> K :call LanguageClient#textDocument_references()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
-" ale errors navigation
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
+" error navigation
+nmap <silent> <C-k> <Plug>(coc-diagnostic-prev)
+nmap <silent> <C-j> <Plug>(coc-diagnostic-next)
