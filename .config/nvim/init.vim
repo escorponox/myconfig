@@ -112,6 +112,7 @@ set updatetime=100
 set shortmess+=c
 set showtabline=2
 set pumheight=10
+set scl=yes
 
 " reload changed file on focus, buffer enter
 " helps if file was changed externally.
