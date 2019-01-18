@@ -21,6 +21,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+Plug 'wincent/ferret'
 
 call plug#end()
 
@@ -129,6 +130,12 @@ set cursorline
 " ======= duplicate line command ======
 command! -count=0 DuplicateLine :-<count>,-0t.
 
+" ====== COC highlights =====
+hi CocErrorHighlight ctermbg=124 guibg=#b71c1c
+hi CocWarningHighlight ctermbg=166 guibg=#ffb74d
+hi CocInfoHighlight ctermbg=227 guibg=#fff59d
+hi CocHintHighlight ctermbg=74 guibg=#2196f3
+
 " ============================== MAPPINGS ==============================
 let mapleader = " "
 
@@ -231,9 +238,9 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " language server protocol
-nnoremap <silent> K :call LanguageClient#textDocument_references()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+nmap <silent> K <Plug>(coc-references)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gr <Plug>(coc-rename)
 
 " error navigation
 nmap <silent> <C-k> <Plug>(coc-diagnostic-prev)

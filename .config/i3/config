@@ -21,8 +21,8 @@ font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # font pango:DejaVu Sans Mono 10
 
 #monitors
-# DP1-8 middle DP1-1 left HDMI2 right
-exec --no-startup-id xrandr --output DP1-1 --left-of DP1-8 --auto --output HDMI2 --right-of DP1-8 --auto
+# DP1-8 middle DP1-1 right HDMI2 left
+exec --no-startup-id xrandr --output DP1-1 --right-of DP1-8 --auto --output HDMI2 --left-of DP1-8 --auto
 exec --no-startup-id /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
 
 #exec sudo setpci -s 00:02.0 F4.B=FF
@@ -72,7 +72,12 @@ bindsym $mod+f fullscreen
 
 # workspace definitions
 workspace_layout tabbed
-hide_edge_borders both
+hide_edge_borders smart
+default_floating_border pixel 2
+default_border pixel 2
+
+# class        border  backgr. text    indicat  child_border
+client.focused #4c7899 #000000 #4caf50 #2e9ef4  #f44336
 
 # change container layout (stacked, tabbed, toggle split)
 #bindsym $mod+q layout stacking
@@ -95,12 +100,12 @@ bindsym $mod+e workspace e
 bindsym $mod+Mod1+j workspace prev_on_output
 bindsym $mod+Mod1+k workspace next_on_output
 
-workspace 1 output DP1-1
-workspace q output DP1-1
+workspace 1 output HDMI2
+workspace q output HDMI2
 workspace 2 output DP1-8
 workspace w output DP1-8
-workspace 3 output HDMI2
-workspace e output HDMI2
+workspace 3 output DP1-1
+workspace e output DP1-1
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
@@ -114,7 +119,7 @@ bindsym $mod+Shift+e move container to workspace e
 bindsym $mod+Shift+z move scratchpad
 
 # Show the first scratchpad window
-bindsym $mod+z scratchpad show, resize set 95ppt 90ppt, move position center
+bindsym $mod+z scratchpad show, [class="Tilix" floating] resize set 95ppt 90ppt, move position center
 
 # window rules
 for_window [class="Gpick"] floating enable border normal
@@ -124,7 +129,7 @@ for_window [window_role="task_dialog"] floating enable
 for_window [class="xfce4-notes" instance="Xfce4-notes"] floating enable border none
 for_window [class="^jetbrains-.+"][window_type=dialog] focus
 # for_window [class="Google-chrome"] floating disable
-for_window [class="Pragha"] floating enable, resize set 50ppt 50ppt, move position center
+for_window [class="Tilix" floating] border pixel 2
 
 assign [class="Pragha"] 2
 assign [class="VirtualBox"] e
