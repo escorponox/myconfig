@@ -16,6 +16,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'styled-components/vim-styled-components'
 Plug 'elzr/vim-json'
+Plug 'jparise/vim-graphql'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -132,9 +133,13 @@ command! -count=0 DuplicateLine :-<count>,-0t.
 
 " ====== COC highlights =====
 hi CocErrorHighlight ctermbg=124 guibg=#b71c1c
-hi CocWarningHighlight ctermbg=166 guibg=#ffb74d
-hi CocInfoHighlight ctermbg=227 guibg=#fff59d
-hi CocHintHighlight ctermbg=74 guibg=#2196f3
+hi CocWarningHighlight ctermbg=166 guibg=#722600
+hi CocInfoHighlight ctermbg=227 guibg=#ba643b
+hi CocHintHighlight ctermbg=74 guibg=#0074b0
+
+hi CocHighlightText ctermbg=223 guibg=#4527a0
+
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " ============================== MAPPINGS ==============================
 let mapleader = " "

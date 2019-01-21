@@ -5,7 +5,8 @@
     "scss",
     "javascript",
     "javascriptreact",
-    "json"
+    "json",
+    "graphql"
   ],
   "coc.preferences.diagnostic.enable": true,
   "coc.preferences.diagnostic.signOffset": 1000,
