@@ -114,6 +114,7 @@ set wildmenu
 set list!
 set updatetime=100
 set shortmess+=c
+set cmdheight=2
 set showtabline=2
 set pumheight=10
 set scl=yes
