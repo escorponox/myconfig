@@ -16,7 +16,7 @@
   "coc.preferences.diagnostic.infoSign": "--",
   "coc.preferences.diagnostic.hintSign": "->",
   "coc.preferences.diagnostic.virtualText": true,
-  "coc.preferences.diagnostic.enableMessage": false,
-  "coc.preferences.hoverTarget": "echo",
+  "coc.preferences.diagnostic.enableMessage": "always",
+  "coc.preferences.hoverTarget": "preview",
   "javascript.suggestionActions.enabled": false
 }

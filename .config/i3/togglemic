@@ -1,0 +1,3 @@
+#!/bin/bash
+amixer set Capture toggle
+polybar-msg hook mic 1

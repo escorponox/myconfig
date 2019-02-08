@@ -160,18 +160,18 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    ___),
 
   [FUNCTIONL] =  KEYMAP_STACKED
-  (___,                     LGUI(LSHIFT(Key_1)),            LGUI(LSHIFT(Key_2)),          LGUI(LSHIFT(Key_3)),  LGUI(Key_M),          Key_PcApplication,   XXX,
-   Key_PrintScreen,         LGUI(LSHIFT(Key_Q)),            LGUI(LSHIFT(Key_W)),          LGUI(LSHIFT(Key_E)),  LGUI(Key_R),          LGUI(Key_T),         LGUI(Key_Enter),
-   LGUI(Key_Tab),           LGUI(Key_A),                    LGUI(Key_S),                  LGUI(Key_D),          LGUI(LSHIFT(Key_D)),  LGUI(Key_Z),
-   Key_End,                 LGUI(Key_Y),                    LGUI(Key_U),                  LGUI(Key_O),          LGUI(Key_P),          LGUI(LSHIFT(Key_Z)), ___,
+  (___,                     LGUI(LSHIFT(Key_1)),            LGUI(LSHIFT(Key_2)),          LGUI(LSHIFT(Key_3)),  LGUI(Key_N),          LGUI(Key_N),   XXX,
+   Key_PrintScreen,         LGUI(LSHIFT(Key_Q)),            LGUI(LSHIFT(Key_W)),          LGUI(LSHIFT(Key_E)),  LGUI(Key_R),          LGUI(Key_T),   LGUI(Key_Enter),
+   LGUI(Key_Tab),           LGUI(Key_A),                    LGUI(Key_S),                  LGUI(Key_D),          LGUI(LSHIFT(Key_D)),  LGUI(Key_G),
+   Key_End,                 LGUI(Key_Z),                    LGUI(Key_X),                  LGUI(Key_C),          LGUI(Key_V),          LGUI(Key_B), ___,
    ShiftToLayer(CSHIFTALT), Key_Delete,                     ShiftToLayer(CALT),           ShiftToLayer(CSHIFT),
    ___,
 
-   ___, ___,                     ___,                 ___,                 ___,                 ___, ___,
-   ___, LGUI(LSHIFT(Key_H)),     LGUI(LSHIFT(Key_J)), LGUI(LSHIFT(Key_K)), LGUI(LSHIFT(Key_L)), ___, LGUI(LSHIFT(Key_F12)),
-        LGUI(Key_H),             LGUI(Key_J),         LGUI(Key_K),         LGUI(Key_L),         ___, ___,
-   ___, ___,                     LGUI(LALT(Key_J)),   LGUI(LALT(Key_K)),   ___,                 ___, ___,
-   ___, ___, LGUI(Key_Spacebar), ___,
+   ___,              ___,                     ___,                 ___,                 ___,                 ___, ___,
+   LGUI(Key_Enter), LGUI(LSHIFT(Key_H)),     LGUI(LSHIFT(Key_J)), LGUI(LSHIFT(Key_K)), LGUI(LSHIFT(Key_L)), ___, LGUI(LSHIFT(Key_F12)),
+                    LGUI(Key_H),             LGUI(Key_J),         LGUI(Key_K),         LGUI(Key_L),         ___, ___,
+   ___,             LGUI(Key_N),             LGUI(Key_M),   LGUI(Key_Comma),   ___,                 ___, ___,
+   ___,             ___,                     LGUI(Key_Spacebar), ___,
    ___),
 
   [FUNCTIONR] =  KEYMAP_STACKED
@@ -182,10 +182,10 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    ShiftToLayer(CSHIFTALT), Key_Delete,                     ShiftToLayer(CALT),           ShiftToLayer(CSHIFT),
    ___,
 
-   Consumer_ScanPreviousTrack, Key_F6,                 Key_F7,                   Key_F8,                   Key_F9,               Key_F10,               Key_F11,
-   LCTRL(Key_Z),               Consumer_ScanNextTrack, Key_LeftCurlyBracket,     Key_RightCurlyBracket,    Key_LeftBracket,      Key_RightBracket,      Key_F12,
-                               Key_LeftArrow,          Key_DownArrow,            Key_UpArrow,              Key_RightArrow,       M(ARROW),              Key_Backslash,
-   ___,                        ___,                    LSHIFT(Key_9),            LSHIFT(Key_0),            ___,                  ___,                   Key_Pipe,
+   Consumer_ScanPreviousTrack, Key_F6,                 Key_F7,                   Key_F8,                   Key_F9,                  Key_F10,                 Key_F11,
+   LCTRL(Key_Z),               Consumer_ScanNextTrack, Key_LeftCurlyBracket,     Key_RightCurlyBracket,    Key_LeftBracket,         Key_RightBracket,        Key_F12,
+                               Key_LeftArrow,          Key_DownArrow,            Key_UpArrow,              Key_RightArrow,          M(ARROW),                Key_Backslash,
+   ___,                        ___,                    LSHIFT(Key_9),            LSHIFT(Key_0),            LSHIFT(Key_LeftBracket), LSHIFT(Key_RightBracket),Key_Pipe,
    ___,                        ___,                    Key_Enter,                ___,
    ___),
    

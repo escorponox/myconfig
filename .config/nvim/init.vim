@@ -40,7 +40,7 @@ let g:user_emmet_mode='a'
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
 "(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
-if (empty($TMUX))
+" if (empty($TMUX))
   if (has("nvim"))
     "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
     let $NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -51,7 +51,7 @@ if (empty($TMUX))
   if (has("termguicolors"))
     set termguicolors
   endif
-endif
+" endif
 
 " ============================== FZF/RIPGREP
 " ========== files
@@ -60,13 +60,17 @@ let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'
 " ========== words
 command! -nargs=* Rg
   \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --ignore-case --color=always --glob "!yarn.lock" '.shellescape(<q-args>), 1,
+  \   'rg --column --line-number --no-heading --ignore-case --color=always --glob "!yarn.lock" --glob "!package-lock.json" '.shellescape(<q-args>), 1,
   \   fzf#vim#with_preview('right:50%', '?'))
 
 " ============================== SETTINGS ==============================
 
 " colorscheme
+set background=dark
 colorscheme gruvbox
+
+let g:gruvbox_italic=1
+let g:gruvbox_contrast_dark='soft'
 
 let g:airline_theme='onedark'
 let g:airline#extensions#tabline#enabled = 1
@@ -87,7 +91,6 @@ let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
 
 set autoindent
 set autoread
-set background=dark
 set backspace=indent,eol,start
 set clipboard+=unnamedplus
 set expandtab
