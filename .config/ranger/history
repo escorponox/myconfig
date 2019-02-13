@@ -1,0 +1,8 @@
+open_with xed
+help
+
+open_with ander
+rename The Prodigy - Breathe.mkv
+rename The Prodigy - Breathe.mp3
+open_with 
+delete

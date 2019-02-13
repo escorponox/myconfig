@@ -208,8 +208,8 @@ bindsym $mod+n exec "setxkbmap -model pc104 -layout us,es -variant ,, -option gr
 bindsym $mod+m exec ~/.config/i3/togglemic
 
 # start dmenu (a program launcher)
-bindsym $mod+Shift+d exec dmenu_run
-bindsym $mod+d exec j4-dmenu-desktop
+bindsym $mod+Shift+d exec dmenu_recency
+bindsym $mod+d exec j4-dmenu-desktop --dmenu="dmenu -fn "Noto-10.5" -nb '#222D31' -nf '#F9FAF9' -sf '#F9FAF9' -sb '#16a085' -i -h 27"
 bindsym $mod+Tab exec "rofi -show window"
 
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
@@ -220,7 +220,7 @@ exec --no-startup-id numlockx
 exec --no-startup-id dunst -conf ~/.config/dunst/dunstrc
 exec --no-startup-id rofi -key-window mod4+Tab
 exec --no-startup-id "setxkbmap -model pc104 -layout us,es -variant ,, -option grp:menu_toggle"
-exec --no-startup-id nitrogen --restore #; sleep 1; compton -b
+exec --no-startup-id nitrogen --restore; sleep 1; compton -b
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id xfce4-notes

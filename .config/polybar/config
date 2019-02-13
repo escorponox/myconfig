@@ -34,7 +34,7 @@ height = 27
 ;offset-x = 1%
 ;offset-y = 1%
 radius = 0
-fixed-center = false
+fixed-center = true
 
 enable-ipc = true
 
@@ -49,19 +49,19 @@ border-size = 0
 padding-left = 0
 padding-right = 0
 
-module-margin-left = 2
-module-margin-right = 2
+module-margin-left = 1
+module-margin-right = 1
 
 font-0 = "Fira Code:size=16:weight=bold;2"
 font-1 = "Fira Code Medium:size=12;4"
 font-2 = "Fira Code Medium:size=12;0"
 
-modules-left = i3
-modules-center = xkeyboard mic
-modules-right = eth wlan memory cpu temperature date
+modules-left = i3 xkeyboard mic
+modules-center = date time
+modules-right = eth wlan memory cpu temperature
 
 tray-position = right
-tray-padding = 2
+tray-padding = 10
 ;tray-background = #0063ff
 
 ;wm-restack = bspwm
@@ -163,7 +163,7 @@ type = internal/cpu
 interval = 2
 format-prefix = "CPU: "
 format-prefix-foreground = ${colors.foreground-alt}
-format-overline = ${colors.secondary}
+format-overline = ${colors.primary}
 label = %percentage:2%%
 label-font = 2
 format-prefix-font = 2
@@ -174,7 +174,7 @@ interval = 2
 format-prefix = "MEM: "
 format-prefix-foreground = ${colors.foreground-alt}
 format-overline = ${colors.primary}
-label = %percentage_used%% %gb_used%/%gb_total%
+label = %percentage_used%%
 label-font = 2
 format-prefix-font = 2
 
@@ -199,9 +199,9 @@ type = internal/network
 interface = enp0s31f6
 interval = 3.0
 
-format-connected-overline = #55aa55
+format-connected-overline = ${colors.primary}
 format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = %{F#4caf50}%upspeed%%{F-} %{F#f44336}%downspeed%%{F-} %local_ip%
+label-connected = D: %{F#4caf50}%downspeed%%{F-} U: %{F#f44336}%upspeed%%{F-}
 label-connected-font = 2
 
 format-disconnected =
@@ -218,19 +218,27 @@ initial = 1
 format-prefix-foreground = ${colors.primary}
 format-prefix = "Mic mute: "
 
-[module/date]
+[module/time]
 type = internal/date
 interval = 5
 
-date = " %d/%m/%Y"
-date-alt = " %Y-%m-%d"
-
-time = "%H:%M " 
+time = "%H:%M" 
 time-alt = %H:%M:%S
 
-format-overline = #0a6cf5
+label = %time%
+label-font = 1
+label-foreground = ${colors.secondary}
 
-label = %date% %time%
+[module/date]
+type = internal/date
+interval = 60
+
+date = "%d/%m/%Y"
+date-alt = "%Y-%m-%d"
+
+format-overline = ${colors.secondary}
+
+label = %date%
 label-font = 2
 
 [module/temperature]
@@ -239,13 +247,13 @@ thermal-zone = 0
 warn-temperature = 60
 
 format = <label>
-format-overline = #f50a4d
+format-overline = ${colors.primary}
 format-warn = <label-warn>
 format-warn-overline = ${self.format-overline}
 
 label = %temperature-c%
 label-warn = %temperature-c%
-label-warn-foreground = ${colors.secondary}
+label-warn-foreground = ${colors.alert}
 label-font = 2
 label-warn-font = 2
 
