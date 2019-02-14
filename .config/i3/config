@@ -79,7 +79,7 @@ bindsym $mod+Shift+e move container to workspace 6
 bindsym $mod+b move scratchpad
 
 # Show the first scratchpad window
-bindsym $mod+g scratchpad show, [class="Alacritty" floating] resize set 95ppt 90ppt, move position center
+bindsym $mod+g scratchpad show, [class="Alacritty" floating workspace="^\d$"] resize set 95ppt 90ppt, move position center
 
 # window rules
 for_window [class="notes" instance="notes"] floating enable border none
