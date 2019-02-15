@@ -18,14 +18,14 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-background = #222d31
-background-alt = #454947
+background = #282828
+background-alt = #3c3836
 ;foreground = ${xrdb:color7:#222}
-foreground = #f9faf9
-foreground-alt = #fdf6e3
-primary = #1abc9c
-secondary = #268bd2
-alert = #b71c1c
+foreground = #ebdbb2
+foreground-alt = #fbf1c7
+primary = #689d6a
+secondary = #458588
+alert = #cc241d
 
 [bar/example]
 monitor = DP1-8
@@ -131,7 +131,7 @@ label-visible-font = 3
 label-urgent-font = 3
 
 label-mode-padding = 2
-label-mode-foreground = #000
+label-mode-foreground = #1d2012
 label-mode-background = ${colors.primary}
 
 ; focused = Active workspace on focused monitor
@@ -184,7 +184,7 @@ interface = wlp3s0
 interval = 3.0
 
 format-connected = <label-connected>
-format-connected-overline = #9f78e1
+format-connected-overline = #b16286
 label-connected = %essid%
 label-font = 2
 
@@ -201,7 +201,7 @@ interval = 3.0
 
 format-connected-overline = ${colors.primary}
 format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = D: %{F#4caf50}%downspeed%%{F-} U: %{F#f44336}%upspeed%%{F-}
+label-connected = D: %{F#98971a}%downspeed%%{F-} U: %{F#cc241d}%upspeed%%{F-}
 label-connected-font = 2
 
 format-disconnected =

@@ -1,6 +1,6 @@
 [global]
     frame_width = 5
-    frame_color = "#f44336"
+    frame_color = "#cc241d"
     
     font = Fira Code Medium 12
     
@@ -181,18 +181,18 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#263238"
-    foreground = "#bdbdbd"
+    background = "#1d2021"
+    foreground = "#bdae93"
     timeout = 10
 
 [urgency_normal]
-    background = "#263238"
-    foreground = "#F9FAF9"
+    background = "#1d2021"
+    foreground = "#ebdbb2"
     timeout = 10
 
 [urgency_critical]
-    background = "#556064"
-    foreground = "#D62929"
+    background = "#282828"
+    foreground = "#cc241d"
     timeout = 0
 
 

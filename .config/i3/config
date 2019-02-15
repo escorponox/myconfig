@@ -189,12 +189,31 @@ bindsym $mod+r mode "resize"
 #            }
 #}
 
-client.focused          #b71c1c #b71c1c #ffffff #FDF6E3
-client.focused_inactive #2F3D44 #2F3D44 #1ABC9C #454948
-client.unfocused        #2F3D44 #2F3D44 #1ABC9C #454948
-client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2
-client.placeholder      #000000 #0c0c0c #ffffff #000000 
-client.background       #2B2C2B
+# client.focused          #b71c1c #b71c1c #ffffff #FDF6E3
+# client.focused_inactive #2F3D44 #2F3D44 #1ABC9C #454948
+# client.unfocused        #2F3D44 #2F3D44 #1ABC9C #454948
+# client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2
+# client.placeholder      #000000 #0c0c0c #ffffff #000000 
+# client.background       #2B2C2B
+
+# set primary gruvbox colorscheme colors
+set $bg #282828
+set $red #cc241d
+set $green #98971a
+set $yellow #d79921
+set $blue #458588
+set $purple #b16286
+set $aqua #689d68
+set $gray #a89984
+set $darkgray #1d2021
+set $foreground #ebdbb2
+
+# aqua gruvbox
+# class                 border|backgr|text|indicator|child_border
+client.focused          $red $red $foreground $purple 
+client.focused_inactive $darkgray $darkgray $yellow $purple
+client.unfocused        $darkgray $darkgray $yellow $purple
+client.urgent           $red $red $foreground $red
 
 # Launchers
 bindsym $mod+Return exec alacritty
