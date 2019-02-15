@@ -207,11 +207,12 @@ set $aqua #689d68
 set $gray #a89984
 set $darkgray #1d2021
 set $foreground #ebdbb2
+set $inactive #504945
 
 # aqua gruvbox
 # class                 border|backgr|text|indicator|child_border
 client.focused          $red $red $foreground $purple 
-client.focused_inactive $darkgray $darkgray $yellow $purple
+client.focused_inactive $inactive $inactive $yellow $purple
 client.unfocused        $darkgray $darkgray $yellow $purple
 client.urgent           $red $red $foreground $red
 
