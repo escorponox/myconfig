@@ -3,7 +3,6 @@ set nocompatible
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'morhetz/gruvbox'
-Plug 'joshdick/onedark.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
@@ -67,18 +66,45 @@ command! -nargs=* Rg
 
 " colorscheme
 set background=dark
+let g:gruvbox_contrast_dark='hard'
 colorscheme gruvbox
 
 let g:gruvbox_italic=1
-let g:gruvbox_contrast_dark='soft'
+let g:airline_theme='gruvbox'
 
-let g:airline_theme='onedark'
+let g:vim_jsx_pretty_colorful_config = 1
+
+" =========== XML EndTag
+hi! link xmlEndTag GruvboxRed
+
+" =========== cursorline
+hi CursorLine ctermfg=NONE ctermbg=NONE
+hi CursorLineNR ctermfg=black ctermbg=yellow
+set cursorline
+
+" ======= duplicate line command ======
+command! -count=0 DuplicateLine :-<count>,-0t.
+
+" ====== COC highlights =====
+hi CocErrorHighlight ctermbg=124 guibg=#990026
+hi CocWarningHighlight ctermbg=166 guibg=#6b2e5c
+hi CocInfoHighlight ctermbg=227 guibg=#3d6b2e
+hi CocHintHighlight ctermbg=74 guibg=#5c6b2e
+
+hi CocHighlightText ctermbg=223 guibg=#2e3d6b
+
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" SRCERY
+" colorscheme srcery
+" let g:airline_theme='srcery'
+
 let g:airline#extensions#tabline#enabled = 1
 
 let g:airline#extensions#tabline#left_sep = '='
 let g:airline#extensions#tabline#left_alt_sep = '|'
 
-let g:airline_powerline_fonts = 0
+let g:airline_powerline_fonts = 1
 
 let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
 let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
@@ -128,24 +154,6 @@ augroup ReloadGroup
   autocmd!
   autocmd! FocusGained,BufEnter * checktime
 augroup END
-
-" =========== cursorline
-hi CursorLine ctermfg=NONE ctermbg=NONE
-hi CursorLineNR ctermfg=black ctermbg=yellow
-set cursorline
-
-" ======= duplicate line command ======
-command! -count=0 DuplicateLine :-<count>,-0t.
-
-" ====== COC highlights =====
-hi CocErrorHighlight ctermbg=124 guibg=#b71c1c
-hi CocWarningHighlight ctermbg=166 guibg=#722600
-hi CocInfoHighlight ctermbg=227 guibg=#ba643b
-hi CocHintHighlight ctermbg=74 guibg=#0074b0
-
-hi CocHighlightText ctermbg=223 guibg=#4527a0
-
-autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " ============================== MAPPINGS ==============================
 let mapleader = " "

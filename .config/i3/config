@@ -39,8 +39,6 @@ bindsym $mod+Shift+k move window to output right; focus output right
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
 
-
-
 # change container layout (stacked, tabbed, toggle split)
 #bindsym $mod+q layout stacking
 bindsym $mod+a layout tabbed
