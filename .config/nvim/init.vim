@@ -236,6 +236,7 @@ nnoremap ,l <C-W>l
 nnoremap ,= <C-W>=
 " kill all windows but current
 nnoremap ,x :only<CR>
+nnoremap ,c :close<CR>
 
 " tabs
 nnoremap ,tg :tabnew<CR>
