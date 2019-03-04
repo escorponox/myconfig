@@ -14,7 +14,6 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'styled-components/vim-styled-components'
-Plug 'elzr/vim-json'
 Plug 'jparise/vim-graphql'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -22,10 +21,11 @@ Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 Plug 'wincent/ferret'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 
 call plug#end()
 
-call coc#add_extension('coc-json', 'coc-highlight', 'coc-tsserver', 'coc-eslint', 'coc-prettier')
+call coc#add_extension('coc-json', 'coc-highlight', 'coc-tsserver', 'coc-eslint', 'coc-prettier', 'coc-yank')
 
 "set completeopt=noinsert,menuone,noselect
 
@@ -95,10 +95,6 @@ hi CocHighlightText ctermbg=223 guibg=#2e3d6b
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
-" SRCERY
-" colorscheme srcery
-" let g:airline_theme='srcery'
-
 let g:airline#extensions#tabline#enabled = 1
 
 let g:airline#extensions#tabline#left_sep = '='
@@ -113,7 +109,7 @@ let g:NERDTreeQuitOnOpen = 1
 let g:NERDTreeShowHidden=1
 let g:NERDTreeWinSize=60
 
-let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
+let g:AutoPairsMultilineClose=0
 
 set autoindent
 set autoread
@@ -179,6 +175,7 @@ nnoremap ,D :bufdo bd<CR>
 
 " vert split
 nnoremap ,v :vs<CR>
+nnoremap ,g :sp<CR>
 
 " session save/open/remove
 nnoremap ,ss :mksession! ~/.config/nvim/sessions/
@@ -259,7 +256,7 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " language server protocol
 nmap <silent> K <Plug>(coc-references)
-nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gd :vs<CR><Plug>(coc-definition)
 nmap <silent> gr <Plug>(coc-rename)
 
 " error navigation
