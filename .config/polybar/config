@@ -28,13 +28,13 @@ secondary = #458588
 alert = #cc241d
 
 [bar/example]
-monitor = DP1-8
+monitor = LVDS1
 width = 100%
 height = 27
 ;offset-x = 1%
 ;offset-y = 1%
 radius = 0
-fixed-center = true
+fixed-center = false
 
 enable-ipc = true
 
@@ -56,9 +56,8 @@ font-0 = "Fira Code:size=16:weight=bold;2"
 font-1 = "Fira Code Medium:size=12;4"
 font-2 = "Fira Code Medium:size=12;0"
 
-modules-left = i3 xkeyboard mic
-modules-center = date time
-modules-right = eth wlan memory cpu temperature
+modules-left = i3 xkeyboard date time
+modules-right = eth wlan memory cpu temperature battery
 
 tray-position = right
 tray-padding = 10
@@ -180,13 +179,14 @@ format-prefix-font = 2
 
 [module/wlan]
 type = internal/network
-interface = wlp3s0
+interface = wlp2s0
 interval = 3.0
 
 format-connected = <label-connected>
 format-connected-overline = #b16286
-label-connected = %essid%
-label-font = 2
+label-connected = %{F#458488}%essid%%{F-} D: %{F#98971a}%downspeed%%{F-} U: %{F#cc241d}%upspeed%%{F-}
+
+label-connected-font = 2
 
 format-disconnected =
 ;format-disconnected = <label-disconnected>
@@ -196,7 +196,7 @@ format-disconnected =
 
 [module/eth]
 type = internal/network
-interface = enp0s31f6
+interface = enp0s25
 interval = 3.0
 
 format-connected-overline = ${colors.primary}
@@ -209,14 +209,6 @@ format-disconnected =
 ;format-disconnected-underline = ${self.format-connected-underline}
 ;label-disconnected = %ifname% disconnected
 ;label-disconnected-foreground = ${colors.foreground-alt}
-
-[module/mic]
-type = custom/ipc
-hook-0 = "pactl list sources | grep Mute | sed -n 3p | cut -c 8-"
-initial = 1
-
-format-prefix-foreground = ${colors.primary}
-format-prefix = "Mic mute: "
 
 [module/time]
 type = internal/date
@@ -256,6 +248,42 @@ label-warn = %temperature-c%
 label-warn-foreground = ${colors.alert}
 label-font = 2
 label-warn-font = 2
+
+[module/battery]
+type = internal/battery
+
+; This is useful in case the battery never reports 100% charge
+full-at = 99
+
+; Use the following command to list batteries and adapters:
+; $ ls -1 /sys/class/power_supply/
+battery = BAT1
+adapter = ADP1
+
+; If an inotify event haven't been reported in this many
+; seconds, manually poll for new values.
+;
+; Needed as a fallback for systems that don't report events
+; on sysfs/procfs.
+;
+; Disable polling by setting the interval to 0.
+;
+; Default: 5
+poll-interval = 300
+
+format-charging = <label-charging>
+label-charging= C %percentage%%
+label-charging-overline= ${colors.secondary}
+label-charging-font= 2
+
+format-discharging = <label-discharging>
+label-discharging= D %percentage%%
+label-discharging-overline= ${colors.alert}
+label-discharging-font= 2
+
+label-full= FULL
+label-full-overline= ${colors.primary}
+label-full-font= 2
 
 [settings]
 screenchange-reload = true

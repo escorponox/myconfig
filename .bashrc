@@ -142,3 +142,5 @@ elif type compctl &>/dev/null; then
   }
   compctl -K _npm_completion npm
 fi
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
