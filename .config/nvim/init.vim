@@ -165,6 +165,8 @@ nnoremap ,F :Files<CR>
 nnoremap ,fg :Rg 
 " find buffer
 nnoremap ,e :Buffers<CR>
+" find status
+nnoremap ,fs :GFiles?<CR>
 
 " close buffer
 nnoremap ,d :bd<CR>

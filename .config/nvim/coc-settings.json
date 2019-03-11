@@ -9,14 +9,14 @@
     "graphql"
   ],
   "coc.preferences.triggerSignatureHelp": false,
-  "coc.preferences.diagnostic.enable": true,
-  "coc.preferences.diagnostic.signOffset": 1000,
-  "coc.preferences.diagnostic.errorSign": "!!",
-  "coc.preferences.diagnostic.warningSign": ">>",
-  "coc.preferences.diagnostic.infoSign": "--",
-  "coc.preferences.diagnostic.hintSign": "->",
-  "coc.preferences.diagnostic.virtualText": true,
-  "coc.preferences.diagnostic.enableMessage": "always",
+  "diagnostic.enable": true,
+  "diagnostic.signOffset": 1000,
+  "diagnostic.errorSign": "!!",
+  "diagnostic.warningSign": ">>",
+  "diagnostic.infoSign": "--",
+  "diagnostic.hintSign": "->",
+  "diagnostic.virtualText": true,
+  "diagnostic.enableMessage": "always",
   "coc.preferences.hoverTarget": "preview",
   "javascript.suggestionActions.enabled": false
 }
