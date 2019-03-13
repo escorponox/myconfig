@@ -1,11 +1,10 @@
 [user]
-	email = escorponox@gmail.com
-	; email = carlos.coves@ext.aqualogybs.net
-	name = Carlos Coves Prieto
+  email = escorponox@gmail.com
+  name = Carlos Coves Prieto
 [core]
-	autocrlf = input
-	safecrlf = true
-	excludesfile = ~/.gitignore_global
+  autocrlf = input
+  safecrlf = true
+  excludesfile = ~/.gitignore_global
 [alias]
     co = checkout
     ci = commit
@@ -36,9 +35,9 @@
   changed = red
   untracked = cyan
 [push]
-	default = simple
+  default = simple
 #[branch]
-#	autosetuprebase = always
+# autosetuprebase = always
 [credential]
   helper = cache --timeout=43200
 
