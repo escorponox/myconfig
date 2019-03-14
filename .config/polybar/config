@@ -58,7 +58,7 @@ font-2 = "Fira Code Medium:size=12;0"
 
 modules-left = i3 xkeyboard mic
 modules-center = date time
-modules-right = eth wlan memory cpu temperature
+modules-right = wlan eth memory cpu temperature
 
 tray-position = right
 tray-padding = 10
@@ -185,8 +185,8 @@ interval = 3.0
 
 format-connected = <label-connected>
 format-connected-overline = #b16286
-label-connected = %essid%
-label-font = 2
+label-connected = %{F#458588}%essid%%{F-} D: %{F#98971a}%downspeed%%{F-} U: %{F#cc241d}%upspeed%%{F-}
+label-connected-font = 2
 
 format-disconnected =
 ;format-disconnected = <label-disconnected>
