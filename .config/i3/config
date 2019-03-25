@@ -31,8 +31,8 @@ bindsym $mod+h focus left
 # move focused window
 bindsym $mod+Shift+h workspace prev_on_output
 bindsym $mod+Shift+l workspace next_on_output
-# bindsym $mod+Shift+h move left
-# bindsym $mod+Shift+l move right
+bindsym $mod+7 move left
+bindsym $mod+8 move right
 bindsym $mod+Shift+j move window to output left; focus output left
 bindsym $mod+Shift+k move window to output right; focus output right
 
@@ -122,7 +122,6 @@ assign [class="^VirtualBox\sMachine$"] e
 bindsym $mod+F12 reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+F12 restart
-bindsym $mod+0 exec "sleep 1; xset dpms force off"
 
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
@@ -224,6 +223,8 @@ bindsym $mod+c exec shutter
 bindsym $mod+v exec pavucontrol
 bindsym $mod+n exec "setxkbmap -model pc104 -layout us,es -variant ,, -option grp:menu_toggle"; exec "~/.config/i3/xkblayout-state set +1"
 bindsym $mod+m exec ~/.config/i3/togglemic
+bindsym $mod+9 exec --no-startup-id xrandr --output VIRTUAL1 --off --output DP1 --off --output HDMI1 --off --output HDMI2 --mode 2560x1440 --pos 0x0 --rotate normal --output DP1-1 --mode 2560x1440 --pos 5120x0 --rotate normal --crtc 2 --primary --output DP1-8 --mode 2560x1440 --pos 2560x0 --rotate normal --crtc 1
+bindsym $mod+0 exec --no-startup-id xrandr --output VIRTUAL1 --off --output DP1 --off --output HDMI1 --off --output HDMI2 --off --output DP1-1 --off --output DP1-8 --mode 2560x1440 --pos 0x0 --rotate normal --primary
 
 # start dmenu (a program launcher)
 bindsym $mod+Shift+d exec dmenu_recency

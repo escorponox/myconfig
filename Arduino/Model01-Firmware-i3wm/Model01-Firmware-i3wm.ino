@@ -167,11 +167,11 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    ShiftToLayer(CSHIFTALT), Key_Delete,                     ShiftToLayer(CALT),           ShiftToLayer(CSHIFT),
    ___,
 
-   ___,              ___,                     ___,                 ___,                 ___,                 ___, ___,
-   LGUI(Key_Enter), LGUI(LSHIFT(Key_H)),     LGUI(LSHIFT(Key_J)), LGUI(LSHIFT(Key_K)), LGUI(LSHIFT(Key_L)), ___, LGUI(LSHIFT(Key_F12)),
-                    LGUI(Key_H),             LGUI(Key_J),         LGUI(Key_K),         LGUI(Key_L),         ___, ___,
-   ___,             LGUI(Key_N),             LGUI(Key_M),   LGUI(Key_Comma),   ___,                 ___, ___,
-   ___,             ___,                     LGUI(Key_Spacebar), ___,
+   ___,             LGUI(Key_6),             LGUI(Key_7),         LGUI(Key_8),         LGUI(Key_9),         LGUI(Key_0), ___,
+   LGUI(Key_Enter), LGUI(LSHIFT(Key_H)),     LGUI(LSHIFT(Key_J)), LGUI(LSHIFT(Key_K)), LGUI(LSHIFT(Key_L)), ___,         LGUI(LSHIFT(Key_F12)),
+                    LGUI(Key_H),             LGUI(Key_J),         LGUI(Key_K),         LGUI(Key_L),         ___,         ___,
+   ___,             LGUI(Key_N),             LGUI(Key_M),         LGUI(Key_Comma),      ___,                ___,         ___,
+   ___,             ___,                     LGUI(Key_Spacebar),  ___,
    ___),
 
   [FUNCTIONR] =  KEYMAP_STACKED

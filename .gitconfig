@@ -1,5 +1,6 @@
 [user]
-  email = escorponox@gmail.com
+  ; email = escorponox@gmail.com
+  email = carlos.coves@interacso.com
   name = Carlos Coves Prieto
 [core]
   autocrlf = input
