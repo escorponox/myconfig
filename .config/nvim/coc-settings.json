@@ -8,7 +8,7 @@
     "json",
     "graphql"
   ],
-  "coc.preferences.triggerSignatureHelp": false,
+  "signature.enable": false,
   "diagnostic.enable": true,
   "diagnostic.signOffset": 1000,
   "diagnostic.errorSign": "!!",
