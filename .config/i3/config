@@ -231,6 +231,7 @@ bindsym $mod+Shift+d exec dmenu_recency
 bindsym $mod+d exec j4-dmenu-desktop --dmenu="dmenu -fn "Noto-10.5" -nb '#222D31' -nf '#F9FAF9' -sf '#F9FAF9' -sb '#16a085' -i -h 27"
 bindsym $mod+Tab exec "rofi -show window"
 
+exec --no-startup-id xrandr --output VIRTUAL1 --off --output DP1 --off --output HDMI1 --off --output HDMI2 --mode 2560x1440 --pos 0x0 --rotate normal --output DP1-1 --mode 2560x1440 --pos 5120x0 --rotate normal --crtc 2 --output DP1-8 --mode 2560x1440 --pos 2560x0 --rotate normal --crtc 1 --primary 
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id pa-applet
 
