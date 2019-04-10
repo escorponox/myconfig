@@ -223,7 +223,7 @@ bindsym $mod+c exec shutter
 bindsym $mod+v exec pavucontrol
 bindsym $mod+n exec "setxkbmap -model pc104 -layout us,es -variant ,, -option grp:menu_toggle"; exec "~/.config/i3/xkblayout-state set +1"
 bindsym $mod+m exec ~/.config/i3/togglemic
-bindsym $mod+9 exec --no-startup-id xrandr --output VIRTUAL1 --off --output DP1 --off --output HDMI1 --off --output HDMI2 --mode 2560x1440 --pos 0x0 --rotate normal --output DP1-1 --mode 2560x1440 --pos 5120x0 --rotate normal --crtc 2 --primary --output DP1-8 --mode 2560x1440 --pos 2560x0 --rotate normal --crtc 1
+bindsym $mod+9 exec --no-startup-id xrandr --output VIRTUAL1 --off --output DP1 --off --output HDMI1 --off --output HDMI2 --mode 2560x1440 --pos 0x0 --rotate normal --output DP1-1 --mode 2560x1440 --pos 5120x0 --rotate normal --crtc 2 --output DP1-8 --mode 2560x1440 --pos 2560x0 --rotate normal --crtc 1 --primary
 bindsym $mod+0 exec --no-startup-id xrandr --output VIRTUAL1 --off --output DP1 --off --output HDMI1 --off --output HDMI2 --off --output DP1-1 --off --output DP1-8 --mode 2560x1440 --pos 0x0 --rotate normal --primary
 
 # start dmenu (a program launcher)
