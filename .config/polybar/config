@@ -212,7 +212,7 @@ format-disconnected =
 
 [module/mic]
 type = custom/ipc
-hook-0 = "pactl list sources | grep Mute | sed -n 3p | cut -c 8-"
+hook-0 = "pactl list sources | awk '/Description: PCM2902 Audio Codec Analog Stereo/{getline; getline; getline; getline; getline; print}' | cut -c 8-"
 initial = 1
 
 format-prefix-foreground = ${colors.primary}
