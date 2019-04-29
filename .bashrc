@@ -70,6 +70,9 @@ alias sudo='sudo '
 alias vim='nvim'
 alias vimdiff='nvim -d'
 alias vimconfig='vim ~/.config/nvim/init.vim'
+alias cm='~/.tmux-cc.sh'
+alias cm-kill='~/.tmux-cc-kill.sh'
+alias rmorig="find . -name '*.orig' -exec rm {} +"
 
 alias ydl='youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --ignore-errors -o "%(title)s.%(ext)s"'
 

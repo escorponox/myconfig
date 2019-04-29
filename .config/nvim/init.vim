@@ -20,8 +20,8 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
-Plug 'wincent/ferret'
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+" Plug 'wincent/ferret'
+" Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 
 call plug#end()
 
@@ -145,7 +145,7 @@ nnoremap ,rr :%s//cg<Left><Left><Left>
 nnoremap ,rg :%s//g<Left><Left>
 
 " find file
-nnoremap ,ff :GFiles<CR>
+nnoremap ,ff :GFiles -co -x node_modules/<CR>
 nnoremap ,F :Files<CR>
 " find fuzzy
 nnoremap ,fg :Rg 
@@ -246,7 +246,32 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 nmap <silent> K <Plug>(coc-references)
 nmap <silent> gd :vs<CR><Plug>(coc-definition)
 nmap <silent> gr <Plug>(coc-rename)
+nmap <silent> ga <Plug>(coc-codeaction)
+nmap <silent> gl <Plug>(coc-codelens-action)
 
 " error navigation
 nmap <silent> <C-k> <Plug>(coc-diagnostic-prev)
 nmap <silent> <C-j> <Plug>(coc-diagnostic-next)
+
+" ==== nameless buffers ===
+command -bang CloseNamelessBuffers call s:CloseNamelessBuffers(<bang>0)
+
+function! s:CloseNamelessBuffers(bang)
+  let nameless_buffers = map(filter(s:getListedOrLoadedBuffers(), 'v:val.name == ""'), 'v:val.bufnr')
+  call s:DeleteBuffers(nameless_buffers, a:bang)
+endfunction
+
+function! s:DeleteBuffers(buffer_numbers, bang)
+  if !empty(a:buffer_numbers)
+    execute s:GetBufferDeleteCommand(a:bang) . ' ' . join(a:buffer_numbers)
+  endif
+endfunction
+
+function! s:GetBufferDeleteCommand(bang)
+  return 'bdelete' . (a:bang ? '!' : '')
+endfunction
+
+function s:getListedOrLoadedBuffers()
+  return filter(getbufinfo(), 'v:val.listed || v:val.loaded')
+endfunction
+

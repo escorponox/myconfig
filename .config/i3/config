@@ -77,7 +77,7 @@ bindsym $mod+Shift+e move container to workspace 6
 bindsym $mod+b move scratchpad
 
 # Show the first scratchpad window
-bindsym $mod+g scratchpad show, [class="Alacritty" floating workspace="^\d$"] resize set 95ppt 90ppt, move position center
+bindsym $mod+g scratchpad show, [class="kitty" floating workspace="^\d$"] resize set 95ppt 90ppt, move position center
 
 # window rules
 for_window [class="notes" instance="notes"] floating enable border none
@@ -217,9 +217,9 @@ client.unfocused        $darkgray $darkgray $yellow $purple
 client.urgent           $red $red $foreground $red
 
 # Launchers
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec kitty
 bindsym $mod+z exec google-chrome-stable
-bindsym $mod+x exec "alacritty -e ranger"
+bindsym $mod+x exec "kitty -e ranger"
 bindsym $mod+c exec shutter 
 bindsym $mod+v exec pavucontrol
 bindsym $mod+n exec "setxkbmap -model pc104 -layout us,es -variant ,, -option grp:menu_toggle"; exec "~/.config/i3/xkblayout-state set +1"
