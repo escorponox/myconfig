@@ -153,6 +153,8 @@ nnoremap ,fg :Rg
 nnoremap ,e :Buffers<CR>
 " find status
 nnoremap ,fs :GFiles?<CR>
+" find mru
+nnoremap <silent> ,fr :exe 'CocList mru'<CR>
 
 " close buffer
 nnoremap ,d :bd<CR>
@@ -252,6 +254,8 @@ nmap <silent> gl <Plug>(coc-codelens-action)
 " error navigation
 nmap <silent> <C-k> <Plug>(coc-diagnostic-prev)
 nmap <silent> <C-j> <Plug>(coc-diagnostic-next)
+
+
 
 " ==== nameless buffers ===
 command -bang CloseNamelessBuffers call s:CloseNamelessBuffers(<bang>0)
