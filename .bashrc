@@ -145,3 +145,19 @@ elif type compctl &>/dev/null; then
   }
   compctl -K _npm_completion npm
 fi
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/escorponox/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/escorponox/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/escorponox/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/escorponox/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+

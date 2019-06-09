@@ -18,5 +18,13 @@
   "diagnostic.virtualText": true,
   "diagnostic.enableMessage": "always",
   "coc.preferences.hoverTarget": "preview",
-  "javascript.suggestionActions.enabled": false
+  "javascript.suggestionActions.enabled": false,
+  "list.normalMappings": {
+    "t": "action:tabe",
+    "s": "action:vsplit"
+  },
+  "list.insertMappings": {
+    "<C-t>": "action:tabe",
+    "<C-v>": "action:vsplit"
+  }
 }

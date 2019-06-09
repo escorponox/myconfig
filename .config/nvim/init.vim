@@ -20,7 +20,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
-" Plug 'wincent/ferret'
+Plug 'wincent/ferret'
 " Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 
 call plug#end()
@@ -70,6 +70,7 @@ set cursorline
 
 " ======= duplicate line command ======
 command! -count=0 DuplicateLine :-<count>,-0t.
+command! -nargs=+ CopyLine execute split(<q-args>, ' ')[0] . ',' . split(<q-args>, ' ')[1] . 't.'
 
 " ====== COC highlights =====
 hi CocErrorHighlight ctermbg=124 guibg=#990026
@@ -81,7 +82,7 @@ hi CocHighlightText ctermbg=223 guibg=#2e3d6b
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 
 let g:airline#extensions#tabline#left_sep = '='
 let g:airline#extensions#tabline#left_alt_sep = '|'
@@ -215,14 +216,13 @@ nnoremap ,bn :bn<CR>
 " nnoremap ,e :buffers<CR>:buffer<Space>
 
 " windows
-nnoremap ,z <C-W>x
+nnoremap ,z <C-W>\|
 nnoremap ,h <C-W>h
 nnoremap ,j <C-W>j
 nnoremap ,k <C-W>k
 nnoremap ,l <C-W>l
 nnoremap ,= <C-W>=
-" kill all windows but current
-nnoremap ,x :only<CR>
+nnoremap ,x <C-W>x
 nnoremap ,c :close<CR>
 
 " tabs
@@ -239,6 +239,7 @@ nmap <Leader>hi <Plug>GitGutterPreviewHunk
 
 "duplicate
 nnoremap ,a :DuplicateLine<space>
+nnoremap ,A :CopyLine<space>
 
 "complete
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -254,8 +255,6 @@ nmap <silent> gl <Plug>(coc-codelens-action)
 " error navigation
 nmap <silent> <C-k> <Plug>(coc-diagnostic-prev)
 nmap <silent> <C-j> <Plug>(coc-diagnostic-next)
-
-
 
 " ==== nameless buffers ===
 command -bang CloseNamelessBuffers call s:CloseNamelessBuffers(<bang>0)
