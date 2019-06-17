@@ -12,7 +12,8 @@ Plug 'mattn/emmet-vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
+Plug 'maxmellon/vim-jsx-pretty'
+" Plug 'mxw/vim-jsx'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'jparise/vim-graphql'
 Plug 'jiangmiao/auto-pairs'
@@ -59,9 +60,16 @@ let g:gruvbox_italic=1
 let g:airline_theme='gruvbox'
 
 let g:vim_jsx_pretty_colorful_config = 1
+let g:vim_jsx_pretty_highlight_close_tag = 1
+
+hi link jsxTag GruvboxBlue
+hi link jsxCloseTag GruvboxRed
+hi link jsxCloseString GruvboxRed
+hi link jsxAttrib GruvboxYellow
+hi link jsxEqual GruvboxOrange
 
 " =========== XML EndTag
-hi! link xmlEndTag GruvboxRed
+" hi! link xmlEndTag GruvboxRed
 
 " =========== cursorline
 hi CursorLine ctermfg=NONE ctermbg=NONE
@@ -70,7 +78,8 @@ set cursorline
 
 " ======= duplicate line command ======
 command! -count=0 DuplicateLine :-<count>,-0t.
-command! -nargs=+ CopyLine execute split(<q-args>, ' ')[0] . ',' . split(<q-args>, ' ')[1] . 't.'
+command! -count=0 CopyLine :-<count>,-<count>.
+command! -nargs=+ CopyLines execute '-' . split(<q-args>, ' ')[0] . ',-' . split(<q-args>, ' ')[1] . 't.'
 
 " ====== COC highlights =====
 hi CocErrorHighlight ctermbg=124 guibg=#990026
@@ -78,7 +87,7 @@ hi CocWarningHighlight ctermbg=166 guibg=#6b2e5c
 hi CocInfoHighlight ctermbg=227 guibg=#3d6b2e
 hi CocHintHighlight ctermbg=74 guibg=#5c6b2e
 
-hi CocHighlightText ctermbg=223 guibg=#2e3d6b
+hi CursorColumn ctermbg=223 guibg=#2e3d6b
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
@@ -174,8 +183,8 @@ nnoremap ,so :source ~/.config/nvim/sessions/
 nnoremap ,sr :!rm ~/.config/nvim/sessions/
 
 " edit/save .vimrc
-"nnoremap ,ev :e ~/.config/nvim/init.vim<CR>
-"nnoremap ,sv :so ~/.config/nvim/init.vim<CR>
+nnoremap ,sc :e ~/.config/nvim/init.vim<CR>
+nnoremap ,sv :so ~/.config/nvim/init.vim<CR>
 
 " show invisible chars
 nnoremap ,sh :set list!<CR>
@@ -238,12 +247,14 @@ nmap <Leader>hu <Plug>GitGutterUndoHunk
 nmap <Leader>hi <Plug>GitGutterPreviewHunk
 
 "duplicate
-nnoremap ,a :DuplicateLine<space>
-nnoremap ,A :CopyLine<space>
+nnoremap ,aa :DuplicateLine<space>
+nnoremap ,as :CopyLine<space>
+nnoremap ,ar :CopyLines<space>
 
 "complete
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " language server protocol
 nmap <silent> K <Plug>(coc-references)
@@ -257,7 +268,7 @@ nmap <silent> <C-k> <Plug>(coc-diagnostic-prev)
 nmap <silent> <C-j> <Plug>(coc-diagnostic-next)
 
 " ==== nameless buffers ===
-command -bang CloseNamelessBuffers call s:CloseNamelessBuffers(<bang>0)
+command! -bang CloseNamelessBuffers call s:CloseNamelessBuffers(<bang>0)
 
 function! s:CloseNamelessBuffers(bang)
   let nameless_buffers = map(filter(s:getListedOrLoadedBuffers(), 'v:val.name == ""'), 'v:val.bufnr')
@@ -274,7 +285,7 @@ function! s:GetBufferDeleteCommand(bang)
   return 'bdelete' . (a:bang ? '!' : '')
 endfunction
 
-function s:getListedOrLoadedBuffers()
+function! s:getListedOrLoadedBuffers()
   return filter(getbufinfo(), 'v:val.listed || v:val.loaded')
 endfunction
 
