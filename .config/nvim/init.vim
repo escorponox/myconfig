@@ -52,15 +52,9 @@ command! -nargs=* Rg
 " ============================== SETTINGS ==============================
 
 " colorscheme
-set background=dark
-let g:gruvbox_contrast_dark='hard'
-colorscheme gruvbox
-
-let g:gruvbox_italic=1
-let g:airline_theme='gruvbox'
-
 let g:vim_jsx_pretty_colorful_config = 1
 let g:vim_jsx_pretty_highlight_close_tag = 1
+let g:vim_jsx_pretty_template_tags = []
 
 hi link jsxTag GruvboxBlue
 hi link jsxCloseTag GruvboxRed
@@ -68,11 +62,20 @@ hi link jsxCloseString GruvboxRed
 hi link jsxAttrib GruvboxYellow
 hi link jsxEqual GruvboxOrange
 
+set background=dark
+let g:gruvbox_contrast_dark='hard'
+colorscheme gruvbox
+
+let g:gruvbox_italic=1
+let g:airline_theme='gruvbox'
+
 " =========== XML EndTag
-" hi! link xmlEndTag GruvboxRed
+hi! link xmlEndTag GruvboxRed
+hi! link Identifier GruvboxRed
+hi! link vimVar GruvboxBlue
 
 " =========== cursorline
-hi CursorLine ctermfg=NONE ctermbg=NONE
+" hi CursorLine ctermfg=NONE ctermbg=NONE
 hi CursorLineNR ctermfg=black ctermbg=yellow
 set cursorline
 
