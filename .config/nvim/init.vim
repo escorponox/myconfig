@@ -12,21 +12,20 @@ Plug 'mattn/emmet-vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'pangloss/vim-javascript'
-Plug 'maxmellon/vim-jsx-pretty'
-" Plug 'mxw/vim-jsx'
+Plug 'escorponox/vim-jsx-pretty'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'jparise/vim-graphql'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'wincent/ferret'
 " Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 
 call plug#end()
 
-call coc#add_extension('coc-json', 'coc-highlight', 'coc-tsserver', 'coc-eslint', 'coc-prettier', 'coc-yank')
+call coc#add_extension('coc-json', 'coc-highlight', 'coc-tsserver', 'coc-eslint', 'coc-prettier', 'coc-yank', 'coc-lists', 'coc-calc')
 
 filetype plugin indent on
 syntax on
@@ -52,30 +51,19 @@ command! -nargs=* Rg
 " ============================== SETTINGS ==============================
 
 " colorscheme
-let g:vim_jsx_pretty_colorful_config = 1
-let g:vim_jsx_pretty_highlight_close_tag = 1
-let g:vim_jsx_pretty_template_tags = []
-
-hi link jsxTag GruvboxBlue
-hi link jsxCloseTag GruvboxRed
-hi link jsxCloseString GruvboxRed
-hi link jsxAttrib GruvboxYellow
-hi link jsxEqual GruvboxOrange
-
 set background=dark
+let g:gruvbox_italic=1
 let g:gruvbox_contrast_dark='hard'
 colorscheme gruvbox
 
-let g:gruvbox_italic=1
 let g:airline_theme='gruvbox'
 
 " =========== XML EndTag
-hi! link xmlEndTag GruvboxRed
-hi! link Identifier GruvboxRed
-hi! link vimVar GruvboxBlue
+" hi! link xmlEndTag GruvboxRed
+
+let g:vim_jsx_pretty_colorful_config = 1
 
 " =========== cursorline
-" hi CursorLine ctermfg=NONE ctermbg=NONE
 hi CursorLineNR ctermfg=black ctermbg=yellow
 set cursorline
 
@@ -176,7 +164,7 @@ nnoremap ,d :bd<CR>
 " close all buffers
 nnoremap ,D :bufdo bd<CR>
 
-" vert split
+"split
 nnoremap ,v :vs<CR>
 nnoremap ,g :sp<CR>
 
@@ -257,7 +245,7 @@ nnoremap ,ar :CopyLines<space>
 "complete
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " language server protocol
 nmap <silent> K <Plug>(coc-references)
@@ -292,3 +280,9 @@ function! s:getListedOrLoadedBuffers()
   return filter(getbufinfo(), 'v:val.listed || v:val.loaded')
 endfunction
 
+function! SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
