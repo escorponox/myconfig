@@ -74,7 +74,7 @@ alias cm='~/.tmux-cc.sh'
 alias cm-kill='~/.tmux-cc-kill.sh'
 alias rmorig="find . -name '*.orig' -exec rm {} +"
 
-alias ydl='youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --ignore-errors -o "%(playlist_index)s - %(title)s.%(ext)s"'
+alias ydl='/usr/local/bin/youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --ignore-errors -o "%(playlist_index)s - %(title)s.%(ext)s"'
 
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 export PATH=$PATH:/usr/lib/jvm/java-8-openjdk-amd64/bin

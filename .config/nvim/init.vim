@@ -14,6 +14,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'pangloss/vim-javascript'
 Plug 'escorponox/vim-jsx-pretty'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+Plug 'JulesWang/css.vim'
 Plug 'jparise/vim-graphql'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -57,9 +58,6 @@ let g:gruvbox_contrast_dark='hard'
 colorscheme gruvbox
 
 let g:airline_theme='gruvbox'
-
-" =========== XML EndTag
-" hi! link xmlEndTag GruvboxRed
 
 let g:vim_jsx_pretty_colorful_config = 1
 
