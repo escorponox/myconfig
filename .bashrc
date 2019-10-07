@@ -67,17 +67,20 @@ complete -cf sudo
 complete -cf man
 
 alias sudo='sudo '
-alias vim='nvim'
+# alias vim='nvim'
+alias vim='~/nvim.appimage'
 alias vimdiff='nvim -d'
 alias vimconfig='vim ~/.config/nvim/init.vim'
 alias cm='~/.tmux-cc.sh'
 alias cm-kill='~/.tmux-cc-kill.sh'
+alias dooh='~/.tmux-dooh.sh'
 alias rmorig="find . -name '*.orig' -exec rm {} +"
 
 alias ydl='/usr/local/bin/youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --ignore-errors -o "%(playlist_index)s - %(title)s.%(ext)s"'
+alias kc='kubectl'
 
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-export PATH=$PATH:/usr/lib/jvm/java-8-openjdk-amd64/bin
+export JAVA_HOME=/usr/lib/jvm/java-12-openjdk
+export PATH=$PATH:/usr/lib/jvm/java-12-openjdk/bin:~/.yarn/bin
 
 export ARDUINO_PATH=/usr/bin/arduino
 
@@ -161,3 +164,4 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+source <(kubectl completion bash)

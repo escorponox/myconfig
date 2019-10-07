@@ -12,10 +12,11 @@ Plug 'mattn/emmet-vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'pangloss/vim-javascript'
-Plug 'escorponox/vim-jsx-pretty'
-Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-Plug 'JulesWang/css.vim'
+Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'escorponox/vim-styled-components', { 'branch': 'main' }
+Plug 'escorponox/css.vim'
 Plug 'jparise/vim-graphql'
+Plug 'reasonml-editor/vim-reason-plus'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -26,7 +27,7 @@ Plug 'wincent/ferret'
 
 call plug#end()
 
-call coc#add_extension('coc-json', 'coc-highlight', 'coc-tsserver', 'coc-eslint', 'coc-prettier', 'coc-yank', 'coc-lists', 'coc-calc')
+call coc#add_extension('coc-json', 'coc-highlight', 'coc-tsserver', 'coc-eslint', 'coc-prettier', 'coc-yank', 'coc-lists', 'coc-calc', 'coc-styled-components', 'coc-webpack')
 
 filetype plugin indent on
 syntax on
@@ -49,6 +50,11 @@ command! -nargs=* Rg
   \   'rg --column --line-number --no-heading --ignore-case --color=always --glob "!yarn.lock" --glob "!package-lock.json" '.shellescape(<q-args>), 1,
   \   fzf#vim#with_preview('right:50%', '?'))
 
+" ========== words also in node_modules
+command! -nargs=* Rgnm
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --ignore-case --color=always --no-ignore-vcs --glob "!yarn.lock" --glob "!package-lock.json" '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview('right:50%', '?'))
 " ============================== SETTINGS ==============================
 
 " colorscheme
@@ -59,7 +65,18 @@ colorscheme gruvbox
 
 let g:airline_theme='gruvbox'
 
-let g:vim_jsx_pretty_colorful_config = 1
+let g:vim_jsx_pretty_colorful_config = 0
+let g:vim_jsx_pretty_highlight_close_tag = 1
+
+hi link jsxTag GruvboxBlue
+hi link jsxCloseString GruvboxRed
+hi link jsDestructuringBlock GruvboxBlue
+hi link jsDestructuringProperty GruvboxBlue
+hi link jsDestructuringBraces GruvboxPurple
+hi link jsFuncArgs GruvboxPurple
+hi link jsObjectKey GruvboxBlue
+hi link jsObjectBraces GruvboxPurple
+hi link jsTemplateString GruvboxPurple
 
 " =========== cursorline
 hi CursorLineNR ctermfg=black ctermbg=yellow
@@ -121,10 +138,10 @@ set splitright
 set timeoutlen=2000
 set ttimeoutlen=0
 set wildmenu
-set list!
+set nolist
 set updatetime=100
 set shortmess+=c
-set cmdheight=2
+" set cmdheight=2
 set showtabline=2
 set pumheight=10
 set scl=yes
@@ -230,10 +247,10 @@ nnoremap ,tr :tabc<CR>
 nnoremap ,tp :tabp<CR>
 
 " hunks
-nmap <Leader>hj <Plug>GitGutterNextHunk
-nmap <Leader>hk <Plug>GitGutterPrevHunk
-nmap <Leader>hu <Plug>GitGutterUndoHunk
-nmap <Leader>hi <Plug>GitGutterPreviewHunk
+nmap <Leader>hj <Plug>(GitGutterNextHunk)
+nmap <Leader>hk <Plug>(GitGutterPrevHunk)
+nmap <Leader>hu <Plug>(GitGutterUndoHunk)
+nmap <Leader>hi <Plug>(GitGutterPreviewHunk)
 
 "duplicate
 nnoremap ,aa :DuplicateLine<space>
@@ -255,6 +272,10 @@ nmap <silent> gl <Plug>(coc-codelens-action)
 " error navigation
 nmap <silent> <C-k> <Plug>(coc-diagnostic-prev)
 nmap <silent> <C-j> <Plug>(coc-diagnostic-next)
+
+" float scroll
+nnoremap <expr><C-f> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-f>"
+nnoremap <expr><C-b> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-b>"
 
 " ==== nameless buffers ===
 command! -bang CloseNamelessBuffers call s:CloseNamelessBuffers(<bang>0)

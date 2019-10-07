@@ -218,6 +218,14 @@ initial = 1
 format-prefix-foreground = ${colors.primary}
 format-prefix = "Mic mute: "
 
+[module/pomobar]
+type=custom/ipc
+hook-0 = cat ~/.pomobaroutput
+initial=1
+click-left = ~/.config/polybar/pomobar.py --action=new &
+click-middle= ~/.config/polybar/pomobar.py --action=kill &
+click-right = ~/.config/polybar/pomobar.py --action=break &
+
 [module/time]
 type = internal/date
 interval = 5

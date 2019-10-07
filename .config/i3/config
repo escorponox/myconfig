@@ -113,9 +113,8 @@ for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="Xfburn"] floating enable
 # for_window [class="Gpick"] floating enable border normal
 # for_window [class="Google-chrome"] floating disable
-for_window [title="Slack\sCall\sMinipanel"] move scratchpad
+for_window [class="Slack" floating] move up 200 px
 
-assign [class="Pragha"] 2
 assign [class="VirtualBox"] e
 assign [class="^VirtualBox\sMachine$"] e
 
@@ -235,13 +234,15 @@ bindsym $mod+Tab exec "rofi -show window"
 exec --no-startup-id xrandr --output VIRTUAL1 --off --output DP1 --off --output HDMI1 --off --output HDMI2 --mode 2560x1440 --pos 0x0 --rotate normal --output DP1-1 --mode 2560x1440 --pos 5120x0 --rotate normal --crtc 2 --output DP1-8 --mode 2560x1440 --pos 2560x0 --rotate normal --crtc 1 --primary 
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id pa-applet
+exec --no-startup-id xsetroot -solid "#282828"
 
 exec --no-startup-id nm-applet
 exec --no-startup-id numlockx
 exec --no-startup-id dunst -conf ~/.config/dunst/dunstrc
 exec --no-startup-id rofi -key-window mod4+Tab
 exec --no-startup-id "setxkbmap -model pc104 -layout us,es -variant ,, -option grp:menu_toggle"
-exec --no-startup-id nitrogen --restore; sleep 1; compton -b
+# exec --no-startup-id nitrogen --restore; sleep 1; compton -b
+# exec --no-startup-id compton -b
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id xfce4-notes

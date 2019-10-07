@@ -17,7 +17,7 @@
   "diagnostic.hintSign": "->",
   "diagnostic.virtualText": true,
   "diagnostic.enableMessage": "always",
-  "coc.preferences.hoverTarget": "preview",
+  "coc.preferences.hoverTarget": "float",
   "javascript.suggestionActions.enabled": false,
   "list.normalMappings": {
     "t": "action:tabe",
@@ -26,5 +26,7 @@
   "list.insertMappings": {
     "<C-t>": "action:tabe",
     "<C-v>": "action:vsplit"
-  }
+  },
+  "highlight.colors.enable": false,
+  "yank.enableCompletion": false
 }
