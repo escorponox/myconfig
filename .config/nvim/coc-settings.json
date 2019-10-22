@@ -6,7 +6,8 @@
     "javascript",
     "javascriptreact",
     "json",
-    "graphql"
+    "graphql",
+    "reason"
   ],
   "signature.enable": false,
   "diagnostic.enable": true,
@@ -28,5 +29,7 @@
     "<C-v>": "action:vsplit"
   },
   "highlight.colors.enable": false,
-  "yank.enableCompletion": false
+  "yank.enableCompletion": false,
+  "explorer.icon.enableNerdfont": true,
+  "explorer.file.showHiddenFiles": true
 }

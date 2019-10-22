@@ -214,11 +214,14 @@ nnoremap 0 ^
 nnoremap ^ 0
 
 " explore project dir
-nnoremap - :NERDTree .<CR>
+" nnoremap - :NERDTree .<CR>
+nnoremap - :CocCommand explorer --toggle --sources=buffer+,file+ --file-columns=git,selection,clip,indent,filename .<CR>
 " explore ditree toogle
-nnoremap ,, :NERDTree %<CR>
+" nnoremap ,, :NERDTree %<CR>
+nnoremap ,, :CocCommand explorer --toggle --sources=buffer+,file+ --file-columns=git,selection,clip,indent,filename<CR>
 " tree toggle
-nnoremap ,m :NERDTreeToggle<CR>
+" nnoremap ,m :NERDTreeToggle<CR>
+nnoremap ,m :CocCommand explorer --toggle --sources=buffer+,file+ --file-columns=git,selection,clip,indent,filename<CR>
 
 " info windows
 nnoremap ,o :lopen<CR>

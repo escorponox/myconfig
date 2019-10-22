@@ -67,8 +67,8 @@ complete -cf sudo
 complete -cf man
 
 alias sudo='sudo '
-# alias vim='nvim'
-alias vim='~/nvim.appimage'
+alias vim='nvim'
+# alias vim='~/nvim.appimage'
 alias vimdiff='nvim -d'
 alias vimconfig='vim ~/.config/nvim/init.vim'
 alias cm='~/.tmux-cc.sh'
