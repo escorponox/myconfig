@@ -5,6 +5,8 @@
     "scss",
     "javascript",
     "javascriptreact",
+    "typescript",
+    "typescriptreact",
     "json",
     "graphql",
     "reason"
@@ -31,5 +33,6 @@
   "highlight.colors.enable": false,
   "yank.enableCompletion": false,
   "explorer.icon.enableNerdfont": true,
-  "explorer.file.showHiddenFiles": true
+  "explorer.file.showHiddenFiles": true,
+  "explorer.quitOnOpen": true
 }

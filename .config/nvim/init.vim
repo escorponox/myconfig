@@ -13,9 +13,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'pangloss/vim-javascript'
 Plug 'MaxMEllon/vim-jsx-pretty'
-Plug 'escorponox/vim-styled-components', { 'branch': 'main' }
 Plug 'escorponox/css.vim'
 Plug 'jparise/vim-graphql'
+Plug 'HerringtonDarkholme/yats.vim'
 Plug 'reasonml-editor/vim-reason-plus'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -215,13 +215,16 @@ nnoremap ^ 0
 
 " explore project dir
 " nnoremap - :NERDTree .<CR>
-nnoremap - :CocCommand explorer --toggle --sources=buffer+,file+ --file-columns=git,selection,clip,indent,filename .<CR>
+nnoremap - :CocCommand explorer --toggle --sources=buffer+,file+ --file-columns=git,selection,clip,indent,icon,filename .<CR>
 " explore ditree toogle
 " nnoremap ,, :NERDTree %<CR>
-nnoremap ,, :CocCommand explorer --toggle --sources=buffer+,file+ --file-columns=git,selection,clip,indent,filename<CR>
+function! ExploreCurrentBufferHead()
+  return ":CocCommand explorer --sources=buffer+,file+ --file-columns=git,selection,clip,indent,icon,filename " . expand('%:h')
+endfunction
+nnoremap <expr> ,, ExploreCurrentBufferHead() . "\<CR>"
 " tree toggle
 " nnoremap ,m :NERDTreeToggle<CR>
-nnoremap ,m :CocCommand explorer --toggle --sources=buffer+,file+ --file-columns=git,selection,clip,indent,filename<CR>
+nnoremap ,m :CocCommand explorer --toggle --sources=buffer+,file+ --file-columns=git,selection,clip,indent,icon,filename<CR>
 
 " info windows
 nnoremap ,o :lopen<CR>

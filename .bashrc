@@ -71,9 +71,6 @@ alias vim='nvim'
 # alias vim='~/nvim.appimage'
 alias vimdiff='nvim -d'
 alias vimconfig='vim ~/.config/nvim/init.vim'
-alias cm='~/.tmux-cc.sh'
-alias cm-kill='~/.tmux-cc-kill.sh'
-alias dooh='~/.tmux-dooh.sh'
 alias rmorig="find . -name '*.orig' -exec rm {} +"
 
 alias ydl='/usr/local/bin/youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 --ignore-errors -o "%(playlist_index)s - %(title)s.%(ext)s"'
