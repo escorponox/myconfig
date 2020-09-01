@@ -15,19 +15,19 @@ Plug 'pangloss/vim-javascript'
 Plug 'MaxMEllon/vim-jsx-pretty'
 Plug 'escorponox/css.vim'
 Plug 'jparise/vim-graphql'
+Plug 'jxnblk/vim-mdx-js'
 Plug 'HerringtonDarkholme/yats.vim'
-Plug 'reasonml-editor/vim-reason-plus'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'wincent/ferret'
+Plug 'ryanoasis/vim-devicons'
 " Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 
 call plug#end()
 
-call coc#add_extension('coc-json', 'coc-highlight', 'coc-tsserver', 'coc-eslint', 'coc-prettier', 'coc-yank', 'coc-lists', 'coc-calc', 'coc-styled-components', 'coc-webpack')
+call coc#add_extension('coc-json', 'coc-highlight', 'coc-tsserver', 'coc-eslint', 'coc-prettier', 'coc-yank', 'coc-lists', 'coc-calc', 'coc-styled-components', 'coc-webpack', 'coc-explorer', 'coc-actions', 'coc-react-refactor', 'coc-fzf-preview')
 
 filetype plugin indent on
 syntax on
@@ -40,21 +40,6 @@ if (has("termguicolors"))
   set termguicolors
 endif
 
-" ============================== FZF/RIPGREP
-" ========== files
-let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'
-
-" ========== words
-command! -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --ignore-case --color=always --glob "!yarn.lock" --glob "!package-lock.json" '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview('right:50%', '?'))
-
-" ========== words also in node_modules
-command! -nargs=* Rgnm
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --ignore-case --color=always --no-ignore-vcs --glob "!yarn.lock" --glob "!package-lock.json" '.shellescape(<q-args>), 1,
-  \   fzf#vim#with_preview('right:50%', '?'))
 " ============================== SETTINGS ==============================
 
 " colorscheme
@@ -88,12 +73,12 @@ command! -count=0 CopyLine :-<count>,-<count>.
 command! -nargs=+ CopyLines execute '-' . split(<q-args>, ' ')[0] . ',-' . split(<q-args>, ' ')[1] . 't.'
 
 " ====== COC highlights =====
-hi CocErrorHighlight ctermbg=124 guibg=#990026
-hi CocWarningHighlight ctermbg=166 guibg=#6b2e5c
-hi CocInfoHighlight ctermbg=227 guibg=#3d6b2e
-hi CocHintHighlight ctermbg=74 guibg=#5c6b2e
+" hi CocErrorHighlight ctermbg=124 guibg=#990026
+" hi CocWarningHighlight ctermbg=166 guibg=#6b2e5c
+" hi CocInfoHighlight ctermbg=227 guibg=#3d6b2e
+" hi CocHintHighlight ctermbg=74 guibg=#5c6b2e
 
-hi CursorColumn ctermbg=223 guibg=#2e3d6b
+" hi CursorColumn ctermbg=223 guibg=#2e3d6b
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
@@ -112,6 +97,14 @@ let g:NERDTreeShowHidden=1
 let g:NERDTreeWinSize=60
 
 let g:AutoPairsMultilineClose=0
+
+let g:fzf_preview_filelist_command = 'rg --files --hidden --no-ignore --no-messages -g \!node_modules/ -g \!.git/'
+let g:fzf_preview_command = 'bat --color=always --plain {-1}'
+let g:fzf_preview_grep_cmd = 'rg --column --line-number --no-heading --ignore-case --color=always --glob "!yarn.lock" --glob "!package-lock.json"'
+let g:fzf_preview_use_dev_icons = 1
+let g:fzf_preview_fzf_color_option = 'fg:#ebdbb2,bg:#282828,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f,info:#83a598,prompt:#bdae93,spinner:#fabd2f,pointer:#83a598,marker:#fe8019,header:#665c54'
+
+let $FZF_PREVIEW_PREVIEW_BAT_THEME = 'gruvbox'
 
 set autoindent
 set autoread
@@ -145,6 +138,7 @@ set shortmess+=c
 set showtabline=2
 set pumheight=10
 set scl=yes
+set backupcopy=yes
 
 " reload changed file on focus, buffer enter
 " helps if file was changed externally.
@@ -156,26 +150,28 @@ augroup END
 " ============================== MAPPINGS ==============================
 let mapleader = " "
 
+inoremap jj <Esc>
+
+" visual movement
+nnoremap j gj
+nnoremap k gk
+
 " find and replace word
 nnoremap ,rr :%s//cg<Left><Left><Left>
 nnoremap ,rg :%s//g<Left><Left>
 
 " find file
-nnoremap ,ff :GFiles -co -x node_modules/<CR>
-nnoremap ,F :Files<CR>
-" find fuzzy
-nnoremap ,fg :Rg 
-" find buffer
-nnoremap ,e :Buffers<CR>
-" find status
-nnoremap ,fs :GFiles?<CR>
-" find mru
-nnoremap <silent> ,fr :exe 'CocList mru'<CR>
+nnoremap <silent> ,ff :CocCommand fzf-preview.ProjectFiles<CR>
+nnoremap ,fg :CocCommand fzf-preview.ProjectGrep<Space>
+nnoremap <silent> ,fe :CocCommand fzf-preview.Buffers<CR>
+nnoremap <silent> ,fs :CocCommand fzf-preview.GitStatus<CR>
+nnoremap <silent> ,fr :CocCommand fzf-preview.ProjectMruFiles<CR>
+nnoremap <silent> ,fd :CocCommand fzf-preview.CocCurrentDiagnostics<CR>
+nnoremap <silent> K :CocCommand fzf-preview.CocReferences<CR>
+nnoremap <silent> ,fq :CocCommand fzf-preview.QuickFix<CR>
 
 " close buffer
 nnoremap ,d :bd<CR>
-" close buffer not window
-" nnoremap ,d :bp\|bd #<CR>
 " close all buffers
 nnoremap ,D :bufdo bd<CR>
 
@@ -214,17 +210,12 @@ nnoremap 0 ^
 nnoremap ^ 0
 
 " explore project dir
-" nnoremap - :NERDTree .<CR>
-nnoremap - :CocCommand explorer --toggle --sources=buffer+,file+ --file-columns=git,selection,clip,indent,icon,filename .<CR>
+nnoremap - :NERDTree .<CR>
 " explore ditree toogle
-" nnoremap ,, :NERDTree %<CR>
-function! ExploreCurrentBufferHead()
-  return ":CocCommand explorer --sources=buffer+,file+ --file-columns=git,selection,clip,indent,icon,filename " . expand('%:h')
-endfunction
-nnoremap <expr> ,, ExploreCurrentBufferHead() . "\<CR>"
+nnoremap ,, :NERDTree %<CR>
 " tree toggle
-" nnoremap ,m :NERDTreeToggle<CR>
-nnoremap ,m :CocCommand explorer --toggle --sources=buffer+,file+ --file-columns=git,selection,clip,indent,icon,filename<CR>
+nnoremap ,m :NERDTreeToggle<CR>
+" nnoremap ,m :CocCommand explorer<CR>
 
 " info windows
 nnoremap ,o :lopen<CR>
@@ -269,7 +260,7 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " language server protocol
-nmap <silent> K <Plug>(coc-references)
+" nmap <silent> K <Plug>(coc-references)
 nmap <silent> gd :vs<CR><Plug>(coc-definition)
 nmap <silent> gr <Plug>(coc-rename)
 nmap <silent> ga <Plug>(coc-codeaction)
@@ -283,31 +274,17 @@ nmap <silent> <C-j> <Plug>(coc-diagnostic-next)
 nnoremap <expr><C-f> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-f>"
 nnoremap <expr><C-b> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-b>"
 
-" ==== nameless buffers ===
-command! -bang CloseNamelessBuffers call s:CloseNamelessBuffers(<bang>0)
-
-function! s:CloseNamelessBuffers(bang)
-  let nameless_buffers = map(filter(s:getListedOrLoadedBuffers(), 'v:val.name == ""'), 'v:val.bufnr')
-  call s:DeleteBuffers(nameless_buffers, a:bang)
+" coc-actions
+function! s:cocActionsOpenFromSelected(type) abort
+  execute 'CocCommand actions.open ' . a:type
 endfunction
+nmap <leader>c :CocCommand actions.open<CR>
+xmap <leader>v :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
 
-function! s:DeleteBuffers(buffer_numbers, bang)
-  if !empty(a:buffer_numbers)
-    execute s:GetBufferDeleteCommand(a:bang) . ' ' . join(a:buffer_numbers)
-  endif
-endfunction
-
-function! s:GetBufferDeleteCommand(bang)
-  return 'bdelete' . (a:bang ? '!' : '')
-endfunction
-
-function! s:getListedOrLoadedBuffers()
-  return filter(getbufinfo(), 'v:val.listed || v:val.loaded')
-endfunction
-
-function! SynStack()
-  if !exists("*synstack")
-    return
-  endif
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
+" Syntax highlight debug
+" function! SynStack()
+"   if !exists("*synstack")
+"     return
+"   endif
+"   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+" endfunc
