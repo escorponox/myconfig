@@ -1,11 +1,11 @@
 [user]
   email = escorponox@gmail.com
-  ; email = carlos.coves@interacso.com
   name = Carlos Coves Prieto
 [core]
   autocrlf = input
   safecrlf = true
   excludesfile = ~/.gitignore_global
+  editor = nvim
 [alias]
     co = checkout
     ci = commit
@@ -51,3 +51,4 @@
    tool = intellij
 [difftool "intellij"]
    cmd = idea diff $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE")
+
