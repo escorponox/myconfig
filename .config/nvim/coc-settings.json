@@ -9,7 +9,9 @@
     "typescriptreact",
     "json",
     "graphql",
-    "reason"
+    "reason",
+    "yaml",
+    "markdown.mdx"
   ],
   "signature.enable": false,
   "diagnostic.enable": true,
@@ -30,9 +32,24 @@
     "<C-t>": "action:tabe",
     "<C-v>": "action:vsplit"
   },
-  "highlight.colors.enable": false,
+  "highlight.colors.enable": true,
   "yank.enableCompletion": false,
   "explorer.icon.enableNerdfont": true,
   "explorer.file.showHiddenFiles": true,
-  "explorer.quitOnOpen": true
+  "explorer.quitOnOpen": true,
+  "explorer.position": "floating",
+  "explorer.floating.position": "center",
+  "explorer.floating.width": 80,
+  "explorer.sources": [
+    {
+      "name": "file",
+      "expand": true
+    }
+  ],
+  "explorer.toggle": true,
+  "explorer.keyMappings": {
+    "s": "open:vsplit",
+    "U": "gotoParent",
+    "0": "reveal:0:compact"
+  }
 }
