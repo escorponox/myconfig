@@ -22,7 +22,6 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'scrooloose/nerdtree'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'wincent/ferret'
-Plug 'ryanoasis/vim-devicons'
 " Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 
 call plug#end()
@@ -160,15 +159,27 @@ nnoremap k gk
 nnoremap ,rr :%s//cg<Left><Left><Left>
 nnoremap ,rg :%s//g<Left><Left>
 
-" find file
+" fuzzy find
+function! SearchInProject()
+   call inputsave()
+   let search = input("Search in projecto: ")
+   call inputrestore()
+   if search !=? ""
+     execute "normal! :CocCommand fzf-preview.ProjectGrep\<Space>\"".search."\"\<CR>"
+   endif
+endfunction
+
 nnoremap <silent> ,ff :CocCommand fzf-preview.ProjectFiles<CR>
-nnoremap ,fg :CocCommand fzf-preview.ProjectGrep<Space>
+nnoremap <silent> ,fg :call SearchInProject()<CR>
 nnoremap <silent> ,fe :CocCommand fzf-preview.Buffers<CR>
 nnoremap <silent> ,fs :CocCommand fzf-preview.GitStatus<CR>
 nnoremap <silent> ,fr :CocCommand fzf-preview.ProjectMruFiles<CR>
 nnoremap <silent> ,fd :CocCommand fzf-preview.CocCurrentDiagnostics<CR>
 nnoremap <silent> K :CocCommand fzf-preview.CocReferences<CR>
 nnoremap <silent> ,fq :CocCommand fzf-preview.QuickFix<CR>
+nnoremap <silent> ,fa :CocCommand fzf-preview.GitActions<CR>
+nnoremap <silent> ,fy :CocList yank<CR>
+nnoremap <silent> ,fh :call CocActionAsync('doHover')<CR>
 
 " close buffer
 nnoremap ,d :bd<CR>
@@ -261,7 +272,8 @@ inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " language server protocol
 " nmap <silent> K <Plug>(coc-references)
-nmap <silent> gd :vs<CR><Plug>(coc-definition)
+" nmap <silent> gd :vs<CR><Plug>(coc-definition)
+nmap <silent> gd :call CocActionAsync('jumpDefinition', v:false)<CR>
 nmap <silent> gr <Plug>(coc-rename)
 nmap <silent> ga <Plug>(coc-codeaction)
 nmap <silent> gl <Plug>(coc-codelens-action)
