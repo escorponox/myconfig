@@ -22,6 +22,8 @@
   "diagnostic.hintSign": "->",
   "diagnostic.virtualText": true,
   "diagnostic.enableMessage": "always",
+  "diagnostic.maxWindowWidth": 100,
+  "diagnostic.maxWindowHeight": 16,
   "coc.preferences.hoverTarget": "float",
   "javascript.suggestionActions.enabled": false,
   "list.normalMappings": {
@@ -37,7 +39,7 @@
   "explorer.icon.enableNerdfont": true,
   "explorer.file.showHiddenFiles": true,
   "explorer.quitOnOpen": true,
-  "explorer.position": "floating",
+  "explorer.position": "left",
   "explorer.floating.position": "center",
   "explorer.floating.width": 80,
   "explorer.sources": [
@@ -47,9 +49,10 @@
     }
   ],
   "explorer.toggle": true,
-  "explorer.keyMappings": {
+  "explorer.keyMappings.global": {
     "s": "open:vsplit",
     "U": "gotoParent",
     "0": "reveal:0:compact"
-  }
+  },
+  "yank.highlight.enable": true
 }
