@@ -2,13 +2,12 @@ set nocompatible
 
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'morhetz/gruvbox'
+Plug 'gruvbox-community/gruvbox'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'airblade/vim-gitgutter'
-Plug 'mattn/emmet-vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'pangloss/vim-javascript'
@@ -22,17 +21,13 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'scrooloose/nerdtree'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'wincent/ferret'
-" Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 
 call plug#end()
 
-call coc#add_extension('coc-json', 'coc-highlight', 'coc-tsserver', 'coc-eslint', 'coc-prettier', 'coc-yank', 'coc-lists', 'coc-calc', 'coc-styled-components', 'coc-webpack', 'coc-explorer', 'coc-actions', 'coc-react-refactor', 'coc-fzf-preview')
+call coc#add_extension('coc-json', 'coc-highlight', 'coc-tsserver', 'coc-eslint', 'coc-prettier', 'coc-yank', 'coc-lists', 'coc-calc', 'coc-styled-components', 'coc-webpack', 'coc-fzf-preview')
 
 filetype plugin indent on
 syntax on
-
-let g:user_emmet_leader_key='<C-B>'
-let g:user_emmet_mode='a'
 
 "================color====================
 if (has("termguicolors"))
@@ -70,14 +65,6 @@ set cursorline
 command! -count=0 DuplicateLine :-<count>,-0t.
 command! -count=0 CopyLine :-<count>,-<count>.
 command! -nargs=+ CopyLines execute '-' . split(<q-args>, ' ')[0] . ',-' . split(<q-args>, ' ')[1] . 't.'
-
-" ====== COC highlights =====
-" hi CocErrorHighlight ctermbg=124 guibg=#990026
-" hi CocWarningHighlight ctermbg=166 guibg=#6b2e5c
-" hi CocInfoHighlight ctermbg=227 guibg=#3d6b2e
-" hi CocHintHighlight ctermbg=74 guibg=#5c6b2e
-
-" hi CursorColumn ctermbg=223 guibg=#2e3d6b
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
@@ -285,13 +272,6 @@ nmap <silent> <C-j> <Plug>(coc-diagnostic-next)
 " float scroll
 nnoremap <expr><C-f> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-f>"
 nnoremap <expr><C-b> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-b>"
-
-" coc-actions
-function! s:cocActionsOpenFromSelected(type) abort
-  execute 'CocCommand actions.open ' . a:type
-endfunction
-nmap <leader>c :CocCommand actions.open<CR>
-xmap <leader>v :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
 
 " Syntax highlight debug
 " function! SynStack()
