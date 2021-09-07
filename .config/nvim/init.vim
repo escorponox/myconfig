@@ -10,17 +10,26 @@ Plug 'tpope/vim-commentary'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'pangloss/vim-javascript'
-Plug 'MaxMEllon/vim-jsx-pretty'
-Plug 'escorponox/css.vim'
-Plug 'jparise/vim-graphql'
-Plug 'jxnblk/vim-mdx-js'
-Plug 'HerringtonDarkholme/yats.vim'
+" Plug 'pangloss/vim-javascript'
+" Plug 'MaxMEllon/vim-jsx-pretty'
+" Plug 'escorponox/css.vim'
+" Plug 'jparise/vim-graphql'
+" Plug 'jxnblk/vim-mdx-js'
+" Plug 'HerringtonDarkholme/yats.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'scrooloose/nerdtree'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'wincent/ferret'
+
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/playground'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'windwp/nvim-ts-autotag'
+Plug 'fannheyward/telescope-coc.nvim'
 
 call plug#end()
 
@@ -92,6 +101,8 @@ let g:fzf_preview_fzf_color_option = 'fg:#ebdbb2,bg:#282828,hl:#fabd2f,fg+:#ebdb
 
 let $FZF_PREVIEW_PREVIEW_BAT_THEME = 'gruvbox'
 
+let g:FerretQFHandler = ''
+
 set autoindent
 set autoread
 set backspace=indent,eol,start
@@ -133,6 +144,8 @@ augroup ReloadGroup
   autocmd! FocusGained,BufEnter * checktime
 augroup END
 
+au BufRead,BufNewFile *.graphql,*.graphqls,*.gql setfiletype graphql
+
 " ============================== MAPPINGS ==============================
 let mapleader = " "
 
@@ -156,15 +169,15 @@ function! SearchInProject()
    endif
 endfunction
 
-nnoremap <silent> ,ff :CocCommand fzf-preview.ProjectFiles<CR>
-nnoremap <silent> ,fg :call SearchInProject()<CR>
-nnoremap <silent> ,fe :CocCommand fzf-preview.Buffers<CR>
-nnoremap <silent> ,fs :CocCommand fzf-preview.GitStatus<CR>
-nnoremap <silent> ,fr :CocCommand fzf-preview.ProjectMruFiles<CR>
-nnoremap <silent> ,fd :CocCommand fzf-preview.CocCurrentDiagnostics<CR>
+nnoremap <silent> ,ff :Telescope find_files find_command=rg,--files,--hidden,--no-ignore,--no-messages,-g,!node_modules/,-g,!.git/,-g,!yarn.lock,-g,!package-lock.json<CR>
+nnoremap ,fg :lua require('telescope.builtin').grep_string({ search = vim.fn.input("Search for > "), vimgrep_arguments = {"rg","--column","--line-number","--no-heading","--ignore-case","--color=never","--glob","!yarn.lock","--glob","!package-lock.json"}})<CR>
+nnoremap <silent> ,ft :Telescope grep_string find_command=rg,--column,--line-number,--no-heading,--ignore-case,--color=always,--glob,"!yarn.lock",--glob,"!package-lock.json"<CR>
+nnoremap <silent> ,fe :Telescope buffers<CR>
+nnoremap <silent> ,fs :Telescope git_status<CR>
+nnoremap <silent> ,fr :Telescope coc mru<CR>
+" nnoremap <silent> K :Telescope coc references<CR>
 nnoremap <silent> K :CocCommand fzf-preview.CocReferences<CR>
-nnoremap <silent> ,fq :CocCommand fzf-preview.QuickFix<CR>
-nnoremap <silent> ,fa :CocCommand fzf-preview.GitActions<CR>
+nnoremap <silent> ,fq :Telescope quickfix<CR>
 nnoremap <silent> ,fy :CocList yank<CR>
 nnoremap <silent> ,fh :call CocActionAsync('doHover')<CR>
 
@@ -228,12 +241,14 @@ nnoremap ,bn :bn<CR>
 " windows
 nnoremap ,z <C-W>\|
 nnoremap ,h <C-W>h
-nnoremap ,j <C-W>j
-nnoremap ,k <C-W>k
 nnoremap ,l <C-W>l
 nnoremap ,= <C-W>=
 nnoremap ,x <C-W>x
 nnoremap ,c :close<CR>
+
+" quickfix
+nnoremap ,j :cn<CR>
+nnoremap ,k :cp<CR>
 
 " tabs
 nnoremap ,tg :tabnew<CR>
@@ -280,3 +295,6 @@ nnoremap <expr><C-b> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-b>"
 "   endif
 "   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 " endfunc
+
+:lua require('treesitter-config')
+:lua require('telescope-config')
