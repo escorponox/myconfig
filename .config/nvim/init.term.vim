@@ -2,43 +2,59 @@ set nocompatible
 
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'gruvbox-community/gruvbox'
+Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
+Plug 'airblade/vim-gitgutter'
+Plug 'mattn/emmet-vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'pangloss/vim-javascript'
+Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'escorponox/css.vim'
+Plug 'jparise/vim-graphql'
+Plug 'jxnblk/vim-mdx-js'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'wincent/ferret'
-Plug 'jiangmiao/auto-pairs'
-
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-treesitter/playground'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-Plug 'windwp/nvim-ts-autotag'
-Plug 'fannheyward/telescope-coc.nvim'
-Plug 'lewis6991/gitsigns.nvim'
-Plug 'ThePrimeagen/harpoon'
-
-Plug 'github/copilot.vim'
+" Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 
 call plug#end()
 
-call coc#add_extension('coc-json', 'coc-highlight', 'coc-tsserver', 'coc-eslint', 'coc-prettier', 'coc-yank', 'coc-lists', 'coc-calc', 'coc-styled-components', 'coc-webpack')
+call coc#add_extension('coc-json', 'coc-highlight', 'coc-tsserver', 'coc-eslint', 'coc-prettier', 'coc-yank', 'coc-lists', 'coc-calc', 'coc-styled-components', 'coc-webpack', 'coc-explorer', 'coc-actions', 'coc-react-refactor')
 
 filetype plugin indent on
 syntax on
+
+let g:user_emmet_leader_key='<C-B>'
+let g:user_emmet_mode='a'
 
 "================color====================
 if (has("termguicolors"))
   set termguicolors
 endif
 
+" ============================== FZF/RIPGREP
+" ========== files
+let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --no-ignore-parent'
+
+" ========== words
+command! -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --ignore-case --color=always --glob "!yarn.lock" --glob "!package-lock.json" '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview('right:50%', '?'))
+
+" ========== words also in node_modules
+command! -nargs=* Rgnm
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --ignore-case --color=always --no-ignore-vcs --glob "!yarn.lock" --glob "!package-lock.json" '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview('right:50%', '?'))
 " ============================== SETTINGS ==============================
 
 " colorscheme
@@ -49,6 +65,19 @@ colorscheme gruvbox
 
 let g:airline_theme='gruvbox'
 
+let g:vim_jsx_pretty_colorful_config = 0
+let g:vim_jsx_pretty_highlight_close_tag = 1
+
+hi link jsxTag GruvboxBlue
+hi link jsxCloseString GruvboxRed
+hi link jsDestructuringBlock GruvboxBlue
+hi link jsDestructuringProperty GruvboxBlue
+hi link jsDestructuringBraces GruvboxPurple
+hi link jsFuncArgs GruvboxPurple
+hi link jsObjectKey GruvboxBlue
+hi link jsObjectBraces GruvboxPurple
+hi link jsTemplateString GruvboxPurple
+
 " =========== cursorline
 hi CursorLineNR ctermfg=black ctermbg=yellow
 set cursorline
@@ -57,6 +86,14 @@ set cursorline
 command! -count=0 DuplicateLine :-<count>,-0t.
 command! -count=0 CopyLine :-<count>,-<count>.
 command! -nargs=+ CopyLines execute '-' . split(<q-args>, ' ')[0] . ',-' . split(<q-args>, ' ')[1] . 't.'
+
+" ====== COC highlights =====
+" hi CocErrorHighlight ctermbg=124 guibg=#990026
+" hi CocWarningHighlight ctermbg=166 guibg=#6b2e5c
+" hi CocInfoHighlight ctermbg=227 guibg=#3d6b2e
+" hi CocHintHighlight ctermbg=74 guibg=#5c6b2e
+
+" hi CursorColumn ctermbg=223 guibg=#2e3d6b
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
@@ -75,8 +112,6 @@ let g:NERDTreeShowHidden=1
 let g:NERDTreeWinSize=60
 
 let g:AutoPairsMultilineClose=0
-
-let g:FerretQFHandler = ''
 
 set autoindent
 set autoread
@@ -119,8 +154,6 @@ augroup ReloadGroup
   autocmd! FocusGained,BufEnter * checktime
 augroup END
 
-au BufRead,BufNewFile *.graphql,*.graphqls,*.gql setfiletype graphql
-
 " ============================== MAPPINGS ==============================
 let mapleader = " "
 
@@ -134,20 +167,22 @@ nnoremap k gk
 nnoremap ,rr :%s//cg<Left><Left><Left>
 nnoremap ,rg :%s//g<Left><Left>
 
-" fuzzy find
-nnoremap <silent> ,ff :Telescope find_files find_command=rg,--files,--hidden,--no-ignore,--no-messages,-g,!node_modules/,-g,!.git/,-g,!yarn.lock,-g,!package-lock.json<CR>
-nnoremap ,fg :lua require('telescope.builtin').grep_string({ search = vim.fn.input("Search for > "), vimgrep_arguments = {"rg","--column","--line-number","--no-heading","--ignore-case","--color=never","--glob","!yarn.lock","--glob","!package-lock.json"}})<CR>
-nnoremap <silent> ,ft :Telescope grep_string find_command=rg,--column,--line-number,--no-heading,--ignore-case,--color=always,--glob,"!yarn.lock",--glob,"!package-lock.json"<CR>
-nnoremap <silent> ,fe :Telescope buffers<CR>
-nnoremap <silent> ,fs :Telescope git_status<CR>
-nnoremap <silent> ,fr :Telescope coc mru<CR>
-nnoremap <silent> K :Telescope coc references<CR>
-nnoremap <silent> ,fq :Telescope quickfix<CR>
-nnoremap <silent> ,fy :CocList yank<CR>
-nnoremap <silent> ,fh :call CocActionAsync('doHover')<CR>
+" find file
+nnoremap ,ff :GFiles -co -x node_modules/<CR>
+nnoremap ,F :Files<CR>
+" find fuzzy
+nnoremap ,fg :Rg 
+" find buffer
+nnoremap ,e :Buffers<CR>
+" find status
+nnoremap ,fs :GFiles?<CR>
+" find mru
+nnoremap <silent> ,fr :exe 'CocList mru'<CR>
 
 " close buffer
 nnoremap ,d :bd<CR>
+" close buffer not window
+" nnoremap ,d :bp\|bd #<CR>
 " close all buffers
 nnoremap ,D :bufdo bd<CR>
 
@@ -206,14 +241,12 @@ nnoremap ,bn :bn<CR>
 " windows
 nnoremap ,z <C-W>\|
 nnoremap ,h <C-W>h
+nnoremap ,j <C-W>j
+nnoremap ,k <C-W>k
 nnoremap ,l <C-W>l
 nnoremap ,= <C-W>=
 nnoremap ,x <C-W>x
 nnoremap ,c :close<CR>
-
-" quickfix
-nnoremap ,j :cn<CR>
-nnoremap ,k :cp<CR>
 
 " tabs
 nnoremap ,tg :tabnew<CR>
@@ -221,44 +254,69 @@ nnoremap ,tt :tabn<CR>
 nnoremap ,tr :tabc<CR>
 nnoremap ,tp :tabp<CR>
 
+" hunks
+nmap <Leader>hj <Plug>(GitGutterNextHunk)
+nmap <Leader>hk <Plug>(GitGutterPrevHunk)
+nmap <Leader>hu <Plug>(GitGutterUndoHunk)
+nmap <Leader>hi <Plug>(GitGutterPreviewHunk)
+
 "duplicate
 nnoremap ,aa :DuplicateLine<space>
 nnoremap ,as :CopyLine<space>
 nnoremap ,ar :CopyLines<space>
 
 "complete
-" this two are disabled to test copilot
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-inoremap <expr> <c-space> coc#refresh()
 
-" LSP
-nmap <silent> gd :call CocActionAsync('jumpDefinition', v:false)<CR>
-nmap <silent> gt :call CocActionAsync('jumpTypeDefinition', v:false)<CR>
+" language server protocol
+nmap <silent> K <Plug>(coc-references)
+nmap <silent> gd :vs<CR><Plug>(coc-definition)
 nmap <silent> gr <Plug>(coc-rename)
 nmap <silent> ga <Plug>(coc-codeaction)
 nmap <silent> gl <Plug>(coc-codelens-action)
-nmap <silent> gb :Git blame<CR>
 
 " error navigation
 nmap <silent> <C-k> <Plug>(coc-diagnostic-prev)
 nmap <silent> <C-j> <Plug>(coc-diagnostic-next)
 
-" harpoon
-nnoremap ,ta :lua require("harpoon.mark").add_file()<CR>
-nnoremap ,tm :lua require("harpoon.ui").toggle_quick_menu()<CR>
-nnoremap ,tj :lua require("harpoon.ui").nav_file(1)<CR>
-nnoremap ,tk :lua require("harpoon.ui").nav_file(2)<CR>
-nnoremap ,tl :lua require("harpoon.ui").nav_file(3)<CR>
-nnoremap ,t; :lua require("harpoon.ui").nav_file(4)<CR>
+" float scroll
+nnoremap <expr><C-f> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-f>"
+nnoremap <expr><C-b> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-b>"
 
+" coc-actions
+function! s:cocActionsOpenFromSelected(type) abort
+  execute 'CocCommand actions.open ' . a:type
+endfunction
+nmap <leader>c :CocCommand actions.open<CR>
+xmap <leader>v :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
 
-" coc float scroll
-nnoremap <expr><C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-nnoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+" ==== nameless buffers ===
+command! -bang CloseNamelessBuffers call s:CloseNamelessBuffers(<bang>0)
 
-:lua require('treesitter-config')
-:lua require('telescope-config')
-:lua require('git-signs-config')
+function! s:CloseNamelessBuffers(bang)
+  let nameless_buffers = map(filter(s:getListedOrLoadedBuffers(), 'v:val.name == ""'), 'v:val.bufnr')
+  call s:DeleteBuffers(nameless_buffers, a:bang)
+endfunction
 
+function! s:DeleteBuffers(buffer_numbers, bang)
+  if !empty(a:buffer_numbers)
+    execute s:GetBufferDeleteCommand(a:bang) . ' ' . join(a:buffer_numbers)
+  endif
+endfunction
+
+function! s:GetBufferDeleteCommand(bang)
+  return 'bdelete' . (a:bang ? '!' : '')
+endfunction
+
+function! s:getListedOrLoadedBuffers()
+  return filter(getbufinfo(), 'v:val.listed || v:val.loaded')
+endfunction
+
+function! SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc

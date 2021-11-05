@@ -1,0 +1,172 @@
+let SessionLoad = 1
+let s:so_save = &g:so | let s:siso_save = &g:siso | setg so=0 siso=0 | setl so=-1 siso=-1
+let v:this_session=expand("<sfile>:p")
+silent only
+silent tabonly
+cd ~/projects/LECFront
+if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
+  let s:wipebuf = bufnr('%')
+endif
+set shortmess=aoO
+argglobal
+%argdel
+tabnew
+tabrewind
+edit ~/projects/LECFront/src/App/Scanning/ScanningExclusionsPage/queries/getInstallationsOnScanningExclusionsPage.graphql
+let s:save_splitbelow = &splitbelow
+let s:save_splitright = &splitright
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+let &splitbelow = s:save_splitbelow
+let &splitright = s:save_splitright
+wincmd t
+let s:save_winminheight = &winminheight
+let s:save_winminwidth = &winminwidth
+set winminheight=0
+set winheight=1
+set winminwidth=0
+set winwidth=1
+exe 'vert 1resize ' . ((&columns * 128 + 128) / 256)
+exe 'vert 2resize ' . ((&columns * 127 + 128) / 256)
+argglobal
+balt ~/projects/LECFront/src/App/Scanning/ScanningExclusionsPage/queries/getInstallationsOnScanningExclusionsPage.graphql
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 27 - ((26 * winheight(0) + 33) / 66)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 27
+normal! 0
+wincmd w
+argglobal
+if bufexists("src/App/Scanning/ScanningExclusionsPage/queries/getExclusionsMasterData.fragment.graphql") | buffer src/App/Scanning/ScanningExclusionsPage/queries/getExclusionsMasterData.fragment.graphql | else | edit src/App/Scanning/ScanningExclusionsPage/queries/getExclusionsMasterData.fragment.graphql | endif
+if &buftype ==# 'terminal'
+  silent file src/App/Scanning/ScanningExclusionsPage/queries/getExclusionsMasterData.fragment.graphql
+endif
+balt ~/projects/LECFront/src/App/Scanning/ScanningExclusionsPage/queries/getInstallationsOnScanningExclusionsPage.graphql
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 2 - ((1 * winheight(0) + 33) / 66)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 2
+normal! 0
+wincmd w
+exe 'vert 1resize ' . ((&columns * 128 + 128) / 256)
+exe 'vert 2resize ' . ((&columns * 127 + 128) / 256)
+tabnext
+edit ./src/components/navigation/items/SiteItem.tsx
+let s:save_splitbelow = &splitbelow
+let s:save_splitright = &splitright
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+let &splitbelow = s:save_splitbelow
+let &splitright = s:save_splitright
+wincmd t
+let s:save_winminheight = &winminheight
+let s:save_winminwidth = &winminwidth
+set winminheight=0
+set winheight=1
+set winminwidth=0
+set winwidth=1
+exe 'vert 1resize ' . ((&columns * 128 + 128) / 256)
+exe 'vert 2resize ' . ((&columns * 127 + 128) / 256)
+argglobal
+balt src/components/navigation/NavigationBar.tsx
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 1 - ((0 * winheight(0) + 33) / 66)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 1
+normal! 0
+wincmd w
+argglobal
+if bufexists("./src/components/navigation/items/SiteItem.tsx") | buffer ./src/components/navigation/items/SiteItem.tsx | else | edit ./src/components/navigation/items/SiteItem.tsx | endif
+if &buftype ==# 'terminal'
+  silent file ./src/components/navigation/items/SiteItem.tsx
+endif
+balt src/components/navigation/NavigationBar.tsx
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 118 - ((54 * winheight(0) + 33) / 66)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 118
+normal! 07|
+wincmd w
+2wincmd w
+exe 'vert 1resize ' . ((&columns * 128 + 128) / 256)
+exe 'vert 2resize ' . ((&columns * 127 + 128) / 256)
+tabnext 2
+badd +27 ~/projects/LECFront/src/App/Scanning/ScanningExclusionsPage/queries/getInstallationsOnScanningExclusionsPage.graphql
+badd +0 ~/projects/LECFront/src/App/Scanning/ScanningExclusionsPage/ScanningExclusionsEdit/ScanningExclusionsEdit.tsx
+badd +0 ~/.config/nvim/coc-settings.json
+badd +1 src/App/hooks/useAssetSyncStatus/index.tsx
+badd +169 ~/projects/LECFront/src/components/DuplicatedAssetsModal/Dedup.utils.tsx
+badd +215 ~/projects/LECFront/src/App/InventoryPage/InventoryContainer/hooks/useAssetCursorList.tsx
+badd +305 ~/projects/LECFront/src/App/InventoryPage/navigation/actions/ManageIPLocationsAction/IPLocationForm.tsx
+badd +76 ~/projects/LECFront/src/App/Scanning/ScanningCredentialsMappingPage/MappingForms/components/InstallationSelector.tsx
+badd +297 ~/projects/LECFront/src/App/AssetPage/AssetEditPage/AssetEditComponents/FormMainSection.tsx
+badd +1 src/App/InventoryPage/InventoryContainer/index.ts
+badd +46 src/components/navigation/NavigationBar.tsx
+badd +118 ./src/components/navigation/items/SiteItem.tsx
+badd +2 src/App/Scanning/ScanningExclusionsPage/queries/getExclusionsMasterData.fragment.graphql
+if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
+  silent exe 'bwipe ' . s:wipebuf
+endif
+unlet! s:wipebuf
+set winheight=1 winwidth=20 shortmess=filnxtToOFc
+let &winminheight = s:save_winminheight
+let &winminwidth = s:save_winminwidth
+let s:sx = expand("<sfile>:p:r")."x.vim"
+if filereadable(s:sx)
+  exe "source " . fnameescape(s:sx)
+endif
+let &g:so = s:so_save | let &g:siso = s:siso_save
+set hlsearch
+doautoall SessionLoadPost
+unlet SessionLoad
+" vim: set ft=vim :

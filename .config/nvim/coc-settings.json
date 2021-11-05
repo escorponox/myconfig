@@ -1,4 +1,5 @@
 {
+  "coc.preferences.formatOnType": false,
   "coc.preferences.formatOnSaveFiletypes": [
     "css",
     "Markdown",
@@ -10,21 +11,17 @@
     "json",
     "graphql",
     "reason",
-    "yaml",
-    "markdown.mdx"
+    "markdown.mdx",
+    "mdx"
   ],
   "signature.enable": false,
   "diagnostic.enable": true,
-  "diagnostic.signOffset": 1000,
   "diagnostic.errorSign": "!!",
   "diagnostic.warningSign": ">>",
   "diagnostic.infoSign": "--",
   "diagnostic.hintSign": "->",
   "diagnostic.virtualText": true,
   "diagnostic.enableMessage": "always",
-  "diagnostic.maxWindowWidth": 100,
-  "diagnostic.maxWindowHeight": 16,
-  "coc.preferences.hoverTarget": "float",
   "javascript.suggestionActions.enabled": false,
   "list.normalMappings": {
     "t": "action:tabe",
@@ -36,23 +33,5 @@
   },
   "highlight.colors.enable": true,
   "yank.enableCompletion": false,
-  "explorer.icon.enableNerdfont": true,
-  "explorer.file.showHiddenFiles": true,
-  "explorer.quitOnOpen": true,
-  "explorer.position": "left",
-  "explorer.floating.position": "center",
-  "explorer.floating.width": 80,
-  "explorer.sources": [
-    {
-      "name": "file",
-      "expand": true
-    }
-  ],
-  "explorer.toggle": true,
-  "explorer.keyMappings.global": {
-    "s": "open:vsplit",
-    "U": "gotoParent",
-    "0": "reveal:0:compact"
-  },
   "yank.highlight.enable": true
 }
