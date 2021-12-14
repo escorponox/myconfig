@@ -7,13 +7,10 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'scrooloose/nerdtree'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'wincent/ferret'
 Plug 'jiangmiao/auto-pairs'
+Plug 'antoinemadec/FixCursorHold.nvim'
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
@@ -21,23 +18,21 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'windwp/nvim-ts-autotag'
-Plug 'fannheyward/telescope-coc.nvim'
+Plug 'escorponox/telescope-coc.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'ThePrimeagen/harpoon'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'kdheepak/tabline.nvim'
 
 Plug 'github/copilot.vim'
 
+Plug 'escorponox/nvim-tree.lua'
+
 call plug#end()
 
-call coc#add_extension('coc-json', 'coc-highlight', 'coc-tsserver', 'coc-eslint', 'coc-prettier', 'coc-yank', 'coc-lists', 'coc-calc', 'coc-styled-components', 'coc-webpack')
+source ~/.config/nvim/plugins/nvim-tree-lua.vim
 
-filetype plugin indent on
-syntax on
-
-"================color====================
-if (has("termguicolors"))
-  set termguicolors
-endif
+call coc#add_extension('coc-json', 'coc-highlight', 'coc-tsserver', 'coc-eslint', 'coc-prettier', 'coc-yank', 'coc-lists', 'coc-calc', 'coc-styled-components', 'coc-webpack', 'coc-sumneko-lua')
 
 " ============================== SETTINGS ==============================
 
@@ -47,37 +42,20 @@ let g:gruvbox_italic=1
 let g:gruvbox_contrast_dark='hard'
 colorscheme gruvbox
 
-let g:airline_theme='gruvbox'
-
 " =========== cursorline
 hi CursorLineNR ctermfg=black ctermbg=yellow
 set cursorline
 
-" ======= duplicate line command ======
-command! -count=0 DuplicateLine :-<count>,-0t.
-command! -count=0 CopyLine :-<count>,-<count>.
-command! -nargs=+ CopyLines execute '-' . split(<q-args>, ' ')[0] . ',-' . split(<q-args>, ' ')[1] . 't.'
-
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
-let g:airline#extensions#tabline#enabled = 0
-
-let g:airline#extensions#tabline#left_sep = '='
-let g:airline#extensions#tabline#left_alt_sep = '|'
-
-let g:airline_powerline_fonts = 1
-
-let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
-
-let g:NERDTreeQuitOnOpen = 1
-let g:NERDTreeShowHidden=1
-let g:NERDTreeWinSize=60
-
 let g:AutoPairsMultilineClose=0
+let g:cursorhold_updatetime = 100
+let g:copilot_filetypes = { 'TelescopePropmt': v:false }
 
-let g:FerretQFHandler = ''
+filetype plugin indent on
+syntax on
 
+set termguicolors
 set autoindent
 set autoread
 set backspace=indent,eol,start
@@ -106,11 +84,17 @@ set wildmenu
 set nolist
 set updatetime=100
 set shortmess+=c
-" set cmdheight=2
 set showtabline=2
 set pumheight=10
 set scl=yes
 set backupcopy=yes
+set scrolloff=8
+
+
+" ======= duplicate line command ======
+command! -count=0 DuplicateLine :-<count>,-0t.
+command! -count=0 CopyLine :-<count>,-<count>.
+command! -nargs=+ CopyLines execute '-' . split(<q-args>, ' ')[0] . ',-' . split(<q-args>, ' ')[1] . 't.'
 
 " reload changed file on focus, buffer enter
 " helps if file was changed externally.
@@ -119,12 +103,17 @@ augroup ReloadGroup
   autocmd! FocusGained,BufEnter * checktime
 augroup END
 
-au BufRead,BufNewFile *.graphql,*.graphqls,*.gql setfiletype graphql
+augroup GraphQLFiletype
+  autocmd!
+  au! BufRead,BufNewFile *.graphql,*.graphqls,*.gql setfiletype graphql
+augroup END
+
 
 " ============================== MAPPINGS ==============================
 let mapleader = " "
 
 inoremap jj <Esc>
+nnoremap = ,
 
 " visual movement
 nnoremap j gj
@@ -140,8 +129,8 @@ nnoremap ,fg :lua require('telescope.builtin').grep_string({ search = vim.fn.inp
 nnoremap <silent> ,ft :Telescope grep_string find_command=rg,--column,--line-number,--no-heading,--ignore-case,--color=always,--glob,"!yarn.lock",--glob,"!package-lock.json"<CR>
 nnoremap <silent> ,fe :Telescope buffers<CR>
 nnoremap <silent> ,fs :Telescope git_status<CR>
-nnoremap <silent> ,fr :Telescope coc mru<CR>
-nnoremap <silent> K :Telescope coc references<CR>
+nnoremap <silent> ,fm :Telescope coc mru<CR>
+nnoremap <silent> ,fr :Telescope coc references<CR>
 nnoremap <silent> ,fq :Telescope quickfix<CR>
 nnoremap <silent> ,fy :CocList yank<CR>
 nnoremap <silent> ,fh :call CocActionAsync('doHover')<CR>
@@ -185,14 +174,6 @@ nnoremap q: <Nop>
 nnoremap 0 ^
 nnoremap ^ 0
 
-" explore project dir
-nnoremap - :NERDTree .<CR>
-" explore ditree toogle
-nnoremap ,, :NERDTree %<CR>
-" tree toggle
-nnoremap ,m :NERDTreeToggle<CR>
-" nnoremap ,m :CocCommand explorer<CR>
-
 " info windows
 nnoremap ,o :lopen<CR>
 nnoremap ,p :lclose<CR>:cclose<CR>:pclose<CR>
@@ -227,9 +208,8 @@ nnoremap ,as :CopyLine<space>
 nnoremap ,ar :CopyLines<space>
 
 "complete
-" this two are disabled to test copilot
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 inoremap <expr> <c-space> coc#refresh()
 
@@ -253,7 +233,6 @@ nnoremap ,tk :lua require("harpoon.ui").nav_file(2)<CR>
 nnoremap ,tl :lua require("harpoon.ui").nav_file(3)<CR>
 nnoremap ,t; :lua require("harpoon.ui").nav_file(4)<CR>
 
-
 " coc float scroll
 nnoremap <expr><C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
 nnoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
@@ -261,4 +240,9 @@ nnoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 :lua require('treesitter-config')
 :lua require('telescope-config')
 :lua require('git-signs-config')
+:lua require('lualine-config')
 
+augroup TablineBuffers
+  autocmd!
+  au! TabEnter,BufEnter * lua require('lualine-config').setTablineShowBuffers()
+augroup END
