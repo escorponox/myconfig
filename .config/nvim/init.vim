@@ -9,7 +9,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'jiangmiao/auto-pairs'
 Plug 'antoinemadec/FixCursorHold.nvim'
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -22,7 +21,7 @@ Plug 'escorponox/telescope-coc.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'ThePrimeagen/harpoon'
 Plug 'nvim-lualine/lualine.nvim'
-Plug 'kdheepak/tabline.nvim'
+Plug 'windwp/nvim-autopairs'
 
 Plug 'github/copilot.vim'
 
@@ -32,7 +31,7 @@ call plug#end()
 
 source ~/.config/nvim/plugins/nvim-tree-lua.vim
 
-call coc#add_extension('coc-json', 'coc-highlight', 'coc-tsserver', 'coc-eslint', 'coc-prettier', 'coc-yank', 'coc-lists', 'coc-calc', 'coc-styled-components', 'coc-webpack', 'coc-sumneko-lua')
+call coc#add_extension('coc-json', 'coc-highlight', 'coc-tsserver', 'coc-eslint', 'coc-prettier', 'coc-yank', 'coc-lists', 'coc-calc', 'coc-styled-components', 'coc-webpack', 'coc-sumneko-lua', 'coc-emoji')
 
 " ============================== SETTINGS ==============================
 
@@ -85,7 +84,7 @@ set nolist
 set updatetime=100
 set shortmess+=c
 set showtabline=2
-set pumheight=10
+" set pumheight=20
 set scl=yes
 set backupcopy=yes
 set scrolloff=8
@@ -145,9 +144,8 @@ nnoremap ,v :vs<CR>
 nnoremap ,g :sp<CR>
 
 " session save/open/remove
-nnoremap ,ss :mksession! ~/.config/nvim/sessions/
-nnoremap ,so :source ~/.config/nvim/sessions/
-nnoremap ,sr :!rm ~/.config/nvim/sessions/
+nnoremap ,ss :CocCommand session.save<CR>
+nnoremap ,so :CocCommand session.load<CR>
 
 " edit/save .vimrc
 nnoremap ,sc :e ~/.config/nvim/init.vim<CR>
@@ -241,8 +239,4 @@ nnoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 :lua require('telescope-config')
 :lua require('git-signs-config')
 :lua require('lualine-config')
-
-augroup TablineBuffers
-  autocmd!
-  au! TabEnter,BufEnter * lua require('lualine-config').setTablineShowBuffers()
-augroup END
+:lua require('nvim-autopairs').setup{}
