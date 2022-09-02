@@ -5,79 +5,50 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'gruvbox-community/gruvbox'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-fugitive'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'scrooloose/nerdtree'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'wincent/ferret'
-Plug 'jiangmiao/auto-pairs'
+Plug 'antoinemadec/FixCursorHold.nvim'
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'nvim-treesitter/playground'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'windwp/nvim-ts-autotag'
-Plug 'fannheyward/telescope-coc.nvim'
-Plug 'lewis6991/gitsigns.nvim'
-Plug 'ThePrimeagen/harpoon'
+Plug 'escorponox/telescope-coc.nvim'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'windwp/nvim-autopairs'
 
-Plug 'github/copilot.vim'
+Plug 'escorponox/nvim-tree.lua'
 
 call plug#end()
 
-call coc#add_extension('coc-json', 'coc-highlight', 'coc-tsserver', 'coc-eslint', 'coc-prettier', 'coc-yank', 'coc-lists', 'coc-calc', 'coc-styled-components', 'coc-webpack')
-
-filetype plugin indent on
-syntax on
-
-"================color====================
-if (has("termguicolors"))
-  set termguicolors
-endif
+call coc#add_extension('coc-json', 'coc-highlight', 'coc-tsserver', 'coc-eslint', 'coc-prettier', 'coc-yank', 'coc-lists', 'coc-calc', 'coc-styled-components', 'coc-webpack', 'coc-sumneko-lua', 'coc-emoji', 'coc-jest', 'coc-git')
 
 " ============================== SETTINGS ==============================
 
-" colorscheme
 set background=dark
 let g:gruvbox_italic=1
 let g:gruvbox_contrast_dark='hard'
 colorscheme gruvbox
 
-let g:airline_theme='gruvbox'
-
-" =========== cursorline
 hi CursorLineNR ctermfg=black ctermbg=yellow
 set cursorline
-
-" ======= duplicate line command ======
-command! -count=0 DuplicateLine :-<count>,-0t.
-command! -count=0 CopyLine :-<count>,-<count>.
-command! -nargs=+ CopyLines execute '-' . split(<q-args>, ' ')[0] . ',-' . split(<q-args>, ' ')[1] . 't.'
+hi CocMenuSel ctermbg=66 guibg=#458588
+hi link CocPumSearch GruvboxOrange
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
-let g:airline#extensions#tabline#enabled = 0
-
-let g:airline#extensions#tabline#left_sep = '='
-let g:airline#extensions#tabline#left_alt_sep = '|'
-
-let g:airline_powerline_fonts = 1
-
-let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
-
-let g:NERDTreeQuitOnOpen = 1
-let g:NERDTreeShowHidden=1
-let g:NERDTreeWinSize=60
-
 let g:AutoPairsMultilineClose=0
+let g:cursorhold_updatetime = 100
 
-let g:FerretQFHandler = ''
+filetype plugin indent on
+syntax on
 
+set termguicolors
 set autoindent
 set autoread
 set backspace=indent,eol,start
@@ -106,11 +77,15 @@ set wildmenu
 set nolist
 set updatetime=100
 set shortmess+=c
-" set cmdheight=2
 set showtabline=2
-set pumheight=10
 set scl=yes
 set backupcopy=yes
+set scrolloff=8
+
+" ======= duplicate line command ======
+command! -count=0 DuplicateLine :-<count>,-0t.
+command! -count=0 CopyLine :-<count>,-<count>.
+command! -nargs=+ CopyLines execute '-' . split(<q-args>, ' ')[0] . ',-' . split(<q-args>, ' ')[1] . 't.'
 
 " reload changed file on focus, buffer enter
 " helps if file was changed externally.
@@ -119,12 +94,16 @@ augroup ReloadGroup
   autocmd! FocusGained,BufEnter * checktime
 augroup END
 
-au BufRead,BufNewFile *.graphql,*.graphqls,*.gql setfiletype graphql
+augroup GraphQLFiletype
+  autocmd!
+  au! BufRead,BufNewFile *.graphql,*.graphqls,*.gql setfiletype graphql
+augroup END
 
 " ============================== MAPPINGS ==============================
 let mapleader = " "
 
 inoremap jj <Esc>
+nnoremap = ,
 
 " visual movement
 nnoremap j gj
@@ -140,8 +119,8 @@ nnoremap ,fg :lua require('telescope.builtin').grep_string({ search = vim.fn.inp
 nnoremap <silent> ,ft :Telescope grep_string find_command=rg,--column,--line-number,--no-heading,--ignore-case,--color=always,--glob,"!yarn.lock",--glob,"!package-lock.json"<CR>
 nnoremap <silent> ,fe :Telescope buffers<CR>
 nnoremap <silent> ,fs :Telescope git_status<CR>
-nnoremap <silent> ,fr :Telescope coc mru<CR>
-nnoremap <silent> K :Telescope coc references<CR>
+nnoremap <silent> ,fm :Telescope coc mru<CR>
+nnoremap <silent> ,fr :Telescope coc references<CR>
 nnoremap <silent> ,fq :Telescope quickfix<CR>
 nnoremap <silent> ,fy :CocList yank<CR>
 nnoremap <silent> ,fh :call CocActionAsync('doHover')<CR>
@@ -156,9 +135,8 @@ nnoremap ,v :vs<CR>
 nnoremap ,g :sp<CR>
 
 " session save/open/remove
-nnoremap ,ss :mksession! ~/.config/nvim/sessions/
-nnoremap ,so :source ~/.config/nvim/sessions/
-nnoremap ,sr :!rm ~/.config/nvim/sessions/
+nnoremap ,ss :CocCommand session.save<CR>
+nnoremap ,so :CocCommand session.load<CR>
 
 " edit/save .vimrc
 nnoremap ,sc :e ~/.config/nvim/init.vim<CR>
@@ -185,14 +163,6 @@ nnoremap q: <Nop>
 nnoremap 0 ^
 nnoremap ^ 0
 
-" explore project dir
-nnoremap - :NERDTree .<CR>
-" explore ditree toogle
-nnoremap ,, :NERDTree %<CR>
-" tree toggle
-nnoremap ,m :NERDTreeToggle<CR>
-" nnoremap ,m :CocCommand explorer<CR>
-
 " info windows
 nnoremap ,o :lopen<CR>
 nnoremap ,p :lclose<CR>:cclose<CR>:pclose<CR>
@@ -201,7 +171,6 @@ nnoremap ,p :lclose<CR>:cclose<CR>:pclose<CR>
 nnoremap ,bb :b#<CR>
 nnoremap ,bp :bp<CR>
 nnoremap ,bn :bn<CR>
-" nnoremap ,e :buffers<CR>:buffer<Space>
 
 " windows
 nnoremap ,z <C-W>\|
@@ -227,38 +196,42 @@ nnoremap ,as :CopyLine<space>
 nnoremap ,ar :CopyLines<space>
 
 "complete
-" this two are disabled to test copilot
 " inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 inoremap <expr> <c-space> coc#refresh()
 
 " LSP
 nmap <silent> gd :call CocActionAsync('jumpDefinition', v:false)<CR>
 nmap <silent> gt :call CocActionAsync('jumpTypeDefinition', v:false)<CR>
 nmap <silent> gr <Plug>(coc-rename)
-nmap <silent> ga <Plug>(coc-codeaction)
-nmap <silent> gl <Plug>(coc-codelens-action)
+nmap <silent> ga <Plug>(coc-codeaction-cursor)
+nmap <silent> gl <Plug>(coc-codeaction)
 nmap <silent> gb :Git blame<CR>
 
 " error navigation
 nmap <silent> <C-k> <Plug>(coc-diagnostic-prev)
 nmap <silent> <C-j> <Plug>(coc-diagnostic-next)
 
-" harpoon
-nnoremap ,ta :lua require("harpoon.mark").add_file()<CR>
-nnoremap ,tm :lua require("harpoon.ui").toggle_quick_menu()<CR>
-nnoremap ,tj :lua require("harpoon.ui").nav_file(1)<CR>
-nnoremap ,tk :lua require("harpoon.ui").nav_file(2)<CR>
-nnoremap ,tl :lua require("harpoon.ui").nav_file(3)<CR>
-nnoremap ,t; :lua require("harpoon.ui").nav_file(4)<CR>
-
-
 " coc float scroll
 nnoremap <expr><C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
 nnoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 
+" coc git
+nnoremap <silent> <leader>hj <Plug>(coc-git-nextchunk)
+nnoremap <silent> <leader>hk <Plug>(coc-git-prevchunk)
+nnoremap <silent> <leader>hi :CocCommand git.chunkInfo<CR>
+nnoremap <silent> <leader>hu :CocCommand git.chunkUndo<CR>
+
 :lua require('treesitter-config')
 :lua require('telescope-config')
-:lua require('git-signs-config')
+:lua require('lualine-config')
+:lua require('nvim-autopairs').setup{}
 
+" nvim-tree
+:lua require('lua-tree-config')
+nnoremap ,, :NvimTreeFindFile<CR>
+nnoremap ,m :NvimTreeToggle<CR>
+
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"

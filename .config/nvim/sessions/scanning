@@ -3,20 +3,23 @@ let s:so_save = &g:so | let s:siso_save = &g:siso | setg so=0 siso=0 | setl so=-
 let v:this_session=expand("<sfile>:p")
 silent only
 silent tabonly
-cd ~/projects/LECMultitenant
+cd ~/projects/LECScanningAPI
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
 argglobal
 %argdel
-edit permissions/configuration.json
+edit packages/LECScanningAPI/src/config.ts
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
-1wincmd h
+wincmd _ | wincmd |
+vsplit
+2wincmd h
+wincmd w
 wincmd w
 let &splitbelow = s:save_splitbelow
 let &splitright = s:save_splitright
@@ -27,10 +30,11 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 95 + 96) / 192)
-exe 'vert 2resize ' . ((&columns * 96 + 96) / 192)
+exe 'vert 1resize ' . ((&columns * 85 + 128) / 256)
+exe 'vert 2resize ' . ((&columns * 84 + 128) / 256)
+exe 'vert 3resize ' . ((&columns * 85 + 128) / 256)
 argglobal
-balt permissions/configuration.json
+balt package.json
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -41,19 +45,19 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 102 - ((45 * winheight(0) + 24) / 48)
+let s:l = 36 - ((35 * winheight(0) + 33) / 66)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 102
+keepjumps 36
 normal! 010|
 wincmd w
 argglobal
-if bufexists("permissions/scanning.json") | buffer permissions/scanning.json | else | edit permissions/scanning.json | endif
+if bufexists("packages/LECScanningAPI/package.json") | buffer packages/LECScanningAPI/package.json | else | edit packages/LECScanningAPI/package.json | endif
 if &buftype ==# 'terminal'
-  silent file permissions/scanning.json
+  silent file packages/LECScanningAPI/package.json
 endif
-balt permissions/configuration.json
+balt ~/projects/LECScanningAPI/packages/LECScanningAPI/.env
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -64,18 +68,45 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 27 - ((26 * winheight(0) + 24) / 48)
+let s:l = 17 - ((16 * winheight(0) + 33) / 66)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 27
-normal! 08|
+keepjumps 17
+normal! 079|
 wincmd w
-exe 'vert 1resize ' . ((&columns * 95 + 96) / 192)
-exe 'vert 2resize ' . ((&columns * 96 + 96) / 192)
+argglobal
+if bufexists("~/projects/LECScanningAPI/packages/LECScanningAPI/.env") | buffer ~/projects/LECScanningAPI/packages/LECScanningAPI/.env | else | edit ~/projects/LECScanningAPI/packages/LECScanningAPI/.env | endif
+if &buftype ==# 'terminal'
+  silent file ~/projects/LECScanningAPI/packages/LECScanningAPI/.env
+endif
+balt packages/LECScanningAPI/package.json
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 22 - ((21 * winheight(0) + 33) / 66)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 22
+normal! 0
+wincmd w
+3wincmd w
+exe 'vert 1resize ' . ((&columns * 85 + 128) / 256)
+exe 'vert 2resize ' . ((&columns * 84 + 128) / 256)
+exe 'vert 3resize ' . ((&columns * 85 + 128) / 256)
 tabnext 1
-badd +100 permissions/configuration.json
-badd +0 permissions/scanning.json
+badd +33 packages/LECScanningAPI/src/config.ts
+badd +2 package.json
+badd +11 packages/LECScanningAPI/package.json
+badd +0 ~/projects/LECScanningAPI/packages/LECScanningAPI/.env
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif

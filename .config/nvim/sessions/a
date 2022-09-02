@@ -10,9 +10,7 @@ endif
 set shortmess=aoO
 argglobal
 %argdel
-tabnew
-tabrewind
-edit ~/projects/LECFront/src/App/Scanning/ScanningExclusionsPage/queries/getInstallationsOnScanningExclusionsPage.graphql
+edit src/App/Scanning/ScanningExclusions/ScanningExclusionsListPage/ScanningExclusionsListPage.hooks.tsx
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -29,10 +27,10 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 128 + 128) / 256)
-exe 'vert 2resize ' . ((&columns * 127 + 128) / 256)
+exe 'vert 1resize ' . ((&columns * 127 + 128) / 256)
+exe 'vert 2resize ' . ((&columns * 128 + 128) / 256)
 argglobal
-balt ~/projects/LECFront/src/App/Scanning/ScanningExclusionsPage/queries/getInstallationsOnScanningExclusionsPage.graphql
+balt ~/projects/LECFront/src/App/Scanning/ScanningExclusions/ScanningExclusionsListPage/hooks/useExclusionsListData/useExclusionsListData.typed.tsx
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -43,19 +41,19 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 27 - ((26 * winheight(0) + 33) / 66)
+let s:l = 93 - ((65 * winheight(0) + 33) / 66)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 27
-normal! 0
+keepjumps 93
+normal! 02|
 wincmd w
 argglobal
-if bufexists("src/App/Scanning/ScanningExclusionsPage/queries/getExclusionsMasterData.fragment.graphql") | buffer src/App/Scanning/ScanningExclusionsPage/queries/getExclusionsMasterData.fragment.graphql | else | edit src/App/Scanning/ScanningExclusionsPage/queries/getExclusionsMasterData.fragment.graphql | endif
+if bufexists("~/projects/LECFront/src/App/Scanning/ScanningExclusions/ScanningExclusionsListPage/hooks/useExclusionsListData/useExclusionsListData.typed.tsx") | buffer ~/projects/LECFront/src/App/Scanning/ScanningExclusions/ScanningExclusionsListPage/hooks/useExclusionsListData/useExclusionsListData.typed.tsx | else | edit ~/projects/LECFront/src/App/Scanning/ScanningExclusions/ScanningExclusionsListPage/hooks/useExclusionsListData/useExclusionsListData.typed.tsx | endif
 if &buftype ==# 'terminal'
-  silent file src/App/Scanning/ScanningExclusionsPage/queries/getExclusionsMasterData.fragment.graphql
+  silent file ~/projects/LECFront/src/App/Scanning/ScanningExclusions/ScanningExclusionsListPage/hooks/useExclusionsListData/useExclusionsListData.typed.tsx
 endif
-balt ~/projects/LECFront/src/App/Scanning/ScanningExclusionsPage/queries/getInstallationsOnScanningExclusionsPage.graphql
+balt src/App/Scanning/ScanningExclusions/ScanningExclusionsListPage/ScanningExclusionsListPage.hooks.tsx
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -66,94 +64,18 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 2 - ((1 * winheight(0) + 33) / 66)
+let s:l = 39 - ((21 * winheight(0) + 33) / 66)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 2
-normal! 0
+keepjumps 39
+normal! 012|
 wincmd w
-exe 'vert 1resize ' . ((&columns * 128 + 128) / 256)
-exe 'vert 2resize ' . ((&columns * 127 + 128) / 256)
-tabnext
-edit ./src/components/navigation/items/SiteItem.tsx
-let s:save_splitbelow = &splitbelow
-let s:save_splitright = &splitright
-set splitbelow splitright
-wincmd _ | wincmd |
-vsplit
-1wincmd h
-wincmd w
-let &splitbelow = s:save_splitbelow
-let &splitright = s:save_splitright
-wincmd t
-let s:save_winminheight = &winminheight
-let s:save_winminwidth = &winminwidth
-set winminheight=0
-set winheight=1
-set winminwidth=0
-set winwidth=1
-exe 'vert 1resize ' . ((&columns * 128 + 128) / 256)
-exe 'vert 2resize ' . ((&columns * 127 + 128) / 256)
-argglobal
-balt src/components/navigation/NavigationBar.tsx
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 33) / 66)
-if s:l < 1 | let s:l = 1 | endif
-keepjumps exe s:l
-normal! zt
-keepjumps 1
-normal! 0
-wincmd w
-argglobal
-if bufexists("./src/components/navigation/items/SiteItem.tsx") | buffer ./src/components/navigation/items/SiteItem.tsx | else | edit ./src/components/navigation/items/SiteItem.tsx | endif
-if &buftype ==# 'terminal'
-  silent file ./src/components/navigation/items/SiteItem.tsx
-endif
-balt src/components/navigation/NavigationBar.tsx
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let &fdl = &fdl
-let s:l = 118 - ((54 * winheight(0) + 33) / 66)
-if s:l < 1 | let s:l = 1 | endif
-keepjumps exe s:l
-normal! zt
-keepjumps 118
-normal! 07|
-wincmd w
-2wincmd w
-exe 'vert 1resize ' . ((&columns * 128 + 128) / 256)
-exe 'vert 2resize ' . ((&columns * 127 + 128) / 256)
-tabnext 2
-badd +27 ~/projects/LECFront/src/App/Scanning/ScanningExclusionsPage/queries/getInstallationsOnScanningExclusionsPage.graphql
-badd +0 ~/projects/LECFront/src/App/Scanning/ScanningExclusionsPage/ScanningExclusionsEdit/ScanningExclusionsEdit.tsx
-badd +0 ~/.config/nvim/coc-settings.json
-badd +1 src/App/hooks/useAssetSyncStatus/index.tsx
-badd +169 ~/projects/LECFront/src/components/DuplicatedAssetsModal/Dedup.utils.tsx
-badd +215 ~/projects/LECFront/src/App/InventoryPage/InventoryContainer/hooks/useAssetCursorList.tsx
-badd +305 ~/projects/LECFront/src/App/InventoryPage/navigation/actions/ManageIPLocationsAction/IPLocationForm.tsx
-badd +76 ~/projects/LECFront/src/App/Scanning/ScanningCredentialsMappingPage/MappingForms/components/InstallationSelector.tsx
-badd +297 ~/projects/LECFront/src/App/AssetPage/AssetEditPage/AssetEditComponents/FormMainSection.tsx
-badd +1 src/App/InventoryPage/InventoryContainer/index.ts
-badd +46 src/components/navigation/NavigationBar.tsx
-badd +118 ./src/components/navigation/items/SiteItem.tsx
-badd +2 src/App/Scanning/ScanningExclusionsPage/queries/getExclusionsMasterData.fragment.graphql
+exe 'vert 1resize ' . ((&columns * 127 + 128) / 256)
+exe 'vert 2resize ' . ((&columns * 128 + 128) / 256)
+tabnext 1
+badd +77 src/App/Scanning/ScanningExclusions/ScanningExclusionsListPage/ScanningExclusionsListPage.hooks.tsx
+badd +0 ~/projects/LECFront/src/App/Scanning/ScanningExclusions/ScanningExclusionsListPage/hooks/useExclusionsListData/useExclusionsListData.typed.tsx
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
@@ -167,6 +89,7 @@ if filereadable(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
 set hlsearch
+nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :

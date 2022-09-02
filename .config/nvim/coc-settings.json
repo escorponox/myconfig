@@ -12,7 +12,8 @@
     "graphql",
     "reason",
     "markdown.mdx",
-    "mdx"
+    "mdx",
+    "go"
   ],
   "signature.enable": false,
   "diagnostic.enable": true,
@@ -33,5 +34,25 @@
   },
   "highlight.colors.enable": true,
   "yank.enableCompletion": false,
-  "yank.highlight.enable": true
+  "yank.highlight.enable": true,
+  "sumneko-lua.enableNvimLuaDev": true,
+  "diagnostic.floatConfig": {
+    "maxHeight": 20
+  },
+  "signature.floatConfig": {
+    "maxHeight": 15
+  },
+  "hover.floatConfig": {
+    "maxHeight": 15
+  },
+  "suggest.floatConfig": {
+    "maxHeight": 15
+  },
+  "Lua.telemetry.enable": true,
+  "coc.source.emoji.filetypes": ["markdown", "typescriptreact"],
+  "jest.customFlags": ["silent", "verbose"],
+  "git.addGBlameToBufferVar": false,
+  "go.goplsOptions": {
+    "gofumpt": true
+  }
 }
