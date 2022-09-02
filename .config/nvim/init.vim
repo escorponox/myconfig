@@ -95,9 +95,7 @@ augroup ReloadGroup
 augroup END
 
 augroup GraphQLFiletype
-  autocmd!
-  au! BufRead,BufNewFile *.graphql,*.graphqls,*.gql setfiletype graphql
-augroup END
+  autocmd!au! BufRead,BufNewFile *.graphql,*.graphqls,*.gql setfiletype graphqlaugroup END
 
 " ============================== MAPPINGS ==============================
 let mapleader = " "
