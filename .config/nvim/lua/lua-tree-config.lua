@@ -1,7 +1,7 @@
 local luv = vim.loop
 local reloaders = require'nvim-tree.actions.reloaders.reloaders'
 
-local function template_fn(command)
+local template_fn = function (command)
   return function(node)
     local process = {
       cmd = command,
@@ -44,6 +44,13 @@ local function template_fn(command)
     luv.unref(process.handle)
   end
 end
+
+vim.api.nvim_set_hl(0, "NvimTreeRootFolder", {link = "GruvBoxPurple"})
+vim.api.nvim_set_hl(0, "NvimTreeFolderName", {link = "GruvBoxAqua"})
+vim.api.nvim_set_hl(0, "NvimTreeOpenedFolderName", {link = "GruvBoxGreen"})
+vim.api.nvim_set_hl(0, "NvimTreeEmpyFolderName", {link = "GruvBoxGray"})
+vim.api.nvim_set_hl(0, "NvimTreeGitIgnored", {link = "GruvBoxGray"})
+vim.api.nvim_set_hl(0, "NvimTreeIndentMarker", {link = "GruvBoxOrange"})
 
 
 require'nvim-tree'.setup {
@@ -99,10 +106,16 @@ require'nvim-tree'.setup {
         { key = "t", action = "tabnew" },
         { key = "U", action = "dir_up" },
         { key = "y", action = "copy" },
-        { key = "c", action = "component", action_cb = template_fn("component") },
+        { key = "c", action = "component", action_cb = template_fn('component') },
         { key = "h", action = "hook", action_cb = template_fn("hook") }
       }
     }
-  }
+  },
+  -- on_attach = function(bufnr)
+  --       local inject_node = require("nvim-tree.utils").inject_node
+  --       vim.keymap.set("c", "<leader>n", inject_node(template_fn("component")) , { buffer = bufnr, noremap = true })
+  --       vim.keymap.set("h", "<leader>n", inject_node(template_fn("hook")) , { buffer = bufnr, noremap = true })
+  --     vim.bo[bufnr].path = "/tmp"
+  -- end
 }
 

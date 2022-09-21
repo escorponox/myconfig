@@ -7,7 +7,6 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'antoinemadec/FixCursorHold.nvim'
 
@@ -22,7 +21,9 @@ Plug 'escorponox/telescope-coc.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'windwp/nvim-autopairs'
 
-Plug 'escorponox/nvim-tree.lua'
+Plug 'kyazdani42/nvim-tree.lua'
+
+Plug 'github/copilot.vim'
 
 call plug#end()
 
@@ -95,7 +96,9 @@ augroup ReloadGroup
 augroup END
 
 augroup GraphQLFiletype
-  autocmd!au! BufRead,BufNewFile *.graphql,*.graphqls,*.gql setfiletype graphqlaugroup END
+  autocmd!
+  au! BufRead,BufNewFile *.graphql,*.graphqls,*.gql setfiletype graphql
+augroup END
 
 " ============================== MAPPINGS ==============================
 let mapleader = " "
@@ -197,7 +200,7 @@ nnoremap ,ar :CopyLines<space>
 " inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 inoremap <expr> <c-space> coc#refresh()
 
 " LSP
@@ -225,11 +228,16 @@ nnoremap <silent> <leader>hu :CocCommand git.chunkUndo<CR>
 :lua require('treesitter-config')
 :lua require('telescope-config')
 :lua require('lualine-config')
-:lua require('nvim-autopairs').setup{}
+:lua require('nvim-autopairs').setup({ map_cr = false })
 
 " nvim-tree
 :lua require('lua-tree-config')
 nnoremap ,, :NvimTreeFindFile<CR>
 nnoremap ,m :NvimTreeToggle<CR>
 
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" copilot
+imap <silent> <C-d> <Plug>(copilot-next)
+imap <silent> <C-u> <Plug>(copilot-previous)
+
+" greatest remap ever
+xnoremap <leader>p "\"_dP

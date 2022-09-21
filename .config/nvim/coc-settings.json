@@ -13,7 +13,8 @@
     "reason",
     "markdown.mdx",
     "mdx",
-    "go"
+    "go",
+    "rust"
   ],
   "signature.enable": false,
   "diagnostic.enable": true,
