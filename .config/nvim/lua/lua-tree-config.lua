@@ -100,22 +100,22 @@ require'nvim-tree'.setup {
   },
   view = {
     width = 60,
-    mappings = {
-      list = {
-        { key = "s", action = "vsplit" },
-        { key = "t", action = "tabnew" },
-        { key = "U", action = "dir_up" },
-        { key = "y", action = "copy" },
-        { key = "c", action = "component", action_cb = template_fn('component') },
-        { key = "h", action = "hook", action_cb = template_fn("hook") }
-      }
-    }
+    -- mappings = {
+    --   list = {
+    --     { key = "s", action = "vsplit" },
+    --     { key = "t", action = "tabnew" },
+    --     { key = "U", action = "dir_up" },
+    --     { key = "y", action = "copy" },
+    --     { key = "c", action = "component", action_cb = template_fn('component') },
+    --     { key = "h", action = "hook", action_cb = template_fn("hook") }
+    --   }
+    -- }
   },
-  -- on_attach = function(bufnr)
-  --       local inject_node = require("nvim-tree.utils").inject_node
-  --       vim.keymap.set("c", "<leader>n", inject_node(template_fn("component")) , { buffer = bufnr, noremap = true })
-  --       vim.keymap.set("h", "<leader>n", inject_node(template_fn("hook")) , { buffer = bufnr, noremap = true })
-  --     vim.bo[bufnr].path = "/tmp"
-  -- end
+  on_attach = function(bufnr)
+        local inject_node = require("nvim-tree.utils").inject_node
+        vim.keymap.set("n", "<leader>cc", inject_node(template_fn("component")) , { buffer = bufnr, noremap = true })
+        vim.keymap.set("n", "<leader>ch", inject_node(template_fn("hook")) , { buffer = bufnr, noremap = true })
+      vim.bo[bufnr].path = "/tmp"
+  end
 }
 
