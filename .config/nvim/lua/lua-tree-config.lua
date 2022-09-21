@@ -1,5 +1,6 @@
 local luv = vim.loop
 local reloaders = require'nvim-tree.actions.reloaders.reloaders'
+local treeapi = require'nvim-tree.api'
 
 local template_fn = function (command)
   return function(node)
@@ -100,19 +101,11 @@ require'nvim-tree'.setup {
   },
   view = {
     width = 60,
-    -- mappings = {
-    --   list = {
-    --     { key = "s", action = "vsplit" },
-    --     { key = "t", action = "tabnew" },
-    --     { key = "U", action = "dir_up" },
-    --     { key = "y", action = "copy" },
-    --     { key = "c", action = "component", action_cb = template_fn('component') },
-    --     { key = "h", action = "hook", action_cb = template_fn("hook") }
-    --   }
-    -- }
   },
   on_attach = function(bufnr)
         local inject_node = require("nvim-tree.utils").inject_node
+        vim.keymap.set("n", "s", treeapi.node.open.vertical, { buffer = bufnr, noremap = true })
+        vim.keymap.set("n", "t", treeapi.node.open.tab, { buffer = bufnr, noremap = true })
         vim.keymap.set("n", "<leader>cc", inject_node(template_fn("component")) , { buffer = bufnr, noremap = true })
         vim.keymap.set("n", "<leader>ch", inject_node(template_fn("hook")) , { buffer = bufnr, noremap = true })
       vim.bo[bufnr].path = "/tmp"
