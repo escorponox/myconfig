@@ -2,3 +2,4 @@
 .idea/
 .vscode
 *.orig
+.DS_Store
