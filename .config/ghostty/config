@@ -1,0 +1,9 @@
+shell-integration = none
+#theme = dark:catppuccin-frappe,light:catppuccin-latte
+theme = "Cobalt Neon"
+font-family = "FiraCode Nerd Font Mono Med"
+font-size = 14
+cursor-color = #FF5D62
+cursor-style = block
+
+confirm-close-surface = false
