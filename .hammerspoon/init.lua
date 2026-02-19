@@ -1,66 +1,77 @@
+require("hs.ipc")
+
+-- Install IPC CLI for programmatic control (if not already installed)
+pcall(function()
+	hs.ipc.cliInstall()
+end)
+
 local targetAppName = "Ghostty" -- e.g., "Notes"
 local lastFocusedWindow = nil
+local openCodeAppName = "OpenCode"
+local lastFocusedWindowOpenCode = nil
 
 -- Applications to include for auto-maximize behavior
 local includedApps = {
-    "Ghostty",
-    "kitty",
-    "iTerm2",
+	"Ghostty",
+	"kitty",
+	"iTerm2",
 	"Slack",
-    "Code",
-    "Visual Studio Code",
-    "Xcode",
-    "Chrome"
+	"Code",
+	"Visual Studio Code",
+	"Xcode",
+	"Chrome",
 }
 
 -- Function to check if an app should be auto-maximized
 local function shouldAutoMaximizeApp(appName)
-    for _, includedApp in ipairs(includedApps) do
-        if appName == includedApp then
-            return true
-        end
-    end
-    return false
+	for _, includedApp in ipairs(includedApps) do
+		if appName == includedApp then
+			return true
+		end
+	end
+	return false
 end
 
 -- Window filter to handle new windows
 local windowFilter = hs.window.filter.new()
 windowFilter:subscribe(hs.window.filter.windowCreated, function(window)
-    if window then
-        -- Get the application name
-        local app = window:application()
-        if app then
-            local appName = app:name()
-            
-            -- Only auto-maximize for included applications
-            if not shouldAutoMaximizeApp(appName) then
-                return
-            end
-        end
-        
-        -- Get the screen the window is on
-        local screen = window:screen()
-        if screen then
-            -- Get screen frame and apply 5px margin
-            local screenFrame = screen:frame()
-            local targetFrame = {
-                x = screenFrame.x + 5,
-                y = screenFrame.y + 5,
-                w = screenFrame.w - 10,
-                h = screenFrame.h - 10
-            }
-            
-            -- Set the window frame with a small delay to ensure the window is ready
-            hs.timer.doAfter(0.5, function()
-                -- Check if window still exists by trying to get its frame
-                local success, currentFrame = pcall(function() return window:frame() end)
-                if success and currentFrame then
-                    -- window:setFrame(targetFrame)
+	if window then
+		-- Get the application name
+		local app = window:application()
+		if app then
+			local appName = app:name()
+
+			-- Only auto-maximize for included applications
+			if not shouldAutoMaximizeApp(appName) then
+				return
+			end
+		end
+
+		-- Get the screen the window is on
+		local screen = window:screen()
+		if screen then
+			-- Get screen frame and apply 5px margin
+			local screenFrame = screen:frame()
+			local targetFrame = {
+				x = screenFrame.x + 5,
+				y = screenFrame.y + 5,
+				w = screenFrame.w - 10,
+				h = screenFrame.h - 10,
+			}
+
+			-- Set the window frame with a small delay to ensure the window is ready
+			hs.timer.doAfter(0.5, function()
+				-- Check if window still exists by trying to get its frame
+				local success, currentFrame = pcall(function()
+					return window:frame()
+				end)
+				if success and currentFrame then
+					-- window:setFrame(targetFrame)
 					window:setFrame(screenFrame)
-                end
-            end)
-        end
-    end
+				end
+			end)
+		end
+	end
 end)
 
 hs.hotkey.bind({ "cmd", "alt", "ctrl", "shift" }, "G", function()
@@ -80,6 +91,27 @@ hs.hotkey.bind({ "cmd", "alt", "ctrl", "shift" }, "G", function()
 			end
 		else
 			hs.application.launchOrFocus(targetAppName)
+		end
+	end
+end)
+
+hs.hotkey.bind({ "cmd", "alt", "ctrl", "shift" }, "O", function()
+	local targetApp = hs.application.get(openCodeAppName)
+	local frontmostWindow = hs.window.frontmostWindow()
+
+	if targetApp and targetApp:isFrontmost() then
+		if lastFocusedWindowOpenCode and lastFocusedWindowOpenCode:id() ~= frontmostWindow:id() then
+			lastFocusedWindowOpenCode:focus()
+		end
+	else
+		lastFocusedWindowOpenCode = frontmostWindow
+		if targetApp then
+			local win = targetApp:mainWindow()
+			if win then
+				win:focus()
+			end
+		else
+			hs.application.launchOrFocus(openCodeAppName)
 		end
 	end
 end)
@@ -136,3 +168,27 @@ hs.hotkey.bind({ "cmd", "alt", "ctrl", "shift" }, "F", function()
 		end
 	end
 end)
+
+-- =============================================================================
+-- OpenCode Manager Integration
+-- =============================================================================
+
+-- Function to focus Ghostty - can be called via: hs -c 'focusGhostty()'
+local function focusGhostty()
+	local targetApp = hs.application.get(targetAppName)
+	local frontmostWindow = hs.window.frontmostWindow()
+	if not targetApp or not targetApp:isFrontmost() then
+		lastFocusedWindow = frontmostWindow
+		if targetApp then
+			local win = targetApp:mainWindow()
+			if win then
+				win:focus()
+			end
+		else
+			hs.application.launchOrFocus(targetAppName)
+		end
+	end
+end
+
+-- Expose focusGhostty globally for IPC
+_G.focusGhostty = focusGhostty
