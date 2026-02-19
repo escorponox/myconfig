@@ -9,6 +9,11 @@ else
   }
 fi
 
+setopt INC_APPEND_HISTORY
+setopt HIST_IGNORE_DUPS
+export HISTFILE=~/.zsh_history
+export HISTSIZE=1000000
+
 export VOLTA_HOME="$HOME/.volta"
 export MOVIDAS_HOME="$HOME/.movidas"
 export LOCAL_BIN="$HOME/.local/bin"
