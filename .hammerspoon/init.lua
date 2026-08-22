@@ -1,30 +1,20 @@
-require("hs.ipc")
-
--- Install IPC CLI for programmatic control (if not already installed)
-pcall(function()
-	hs.ipc.cliInstall()
-end)
-
 local targetAppName = "Ghostty" -- e.g., "Notes"
 local lastFocusedWindow = nil
-local openCodeAppName = "OpenCode"
-local lastFocusedWindowOpenCode = nil
 
 -- Applications to include for auto-maximize behavior
-local includedApps = {
+local autoFillApps = {
 	"Ghostty",
 	"kitty",
 	"iTerm2",
 	"Slack",
 	"Code",
-	"Visual Studio Code",
 	"Xcode",
 	"Chrome",
 }
 
 -- Function to check if an app should be auto-maximized
-local function shouldAutoMaximizeApp(appName)
-	for _, includedApp in ipairs(includedApps) do
+local function shouldAutoFill(appName)
+	for _, includedApp in ipairs(autoFillApps) do
 		if appName == includedApp then
 			return true
 		end
@@ -32,9 +22,7 @@ local function shouldAutoMaximizeApp(appName)
 	return false
 end
 
--- Window filter to handle new windows
-local windowFilter = hs.window.filter.new()
-windowFilter:subscribe(hs.window.filter.windowCreated, function(window)
+local autoFill = function(window)
 	if window then
 		-- Get the application name
 		local app = window:application()
@@ -42,7 +30,7 @@ windowFilter:subscribe(hs.window.filter.windowCreated, function(window)
 			local appName = app:name()
 
 			-- Only auto-maximize for included applications
-			if not shouldAutoMaximizeApp(appName) then
+			if not shouldAutoFill(appName) then
 				return
 			end
 		end
@@ -72,9 +60,9 @@ windowFilter:subscribe(hs.window.filter.windowCreated, function(window)
 			end)
 		end
 	end
-end)
+end
 
-hs.hotkey.bind({ "cmd", "alt", "ctrl", "shift" }, "G", function()
+local quakeTerminal = function()
 	local targetApp = hs.application.get(targetAppName)
 	local frontmostWindow = hs.window.frontmostWindow()
 
@@ -93,30 +81,9 @@ hs.hotkey.bind({ "cmd", "alt", "ctrl", "shift" }, "G", function()
 			hs.application.launchOrFocus(targetAppName)
 		end
 	end
-end)
+end
 
-hs.hotkey.bind({ "cmd", "alt", "ctrl", "shift" }, "O", function()
-	local targetApp = hs.application.get(openCodeAppName)
-	local frontmostWindow = hs.window.frontmostWindow()
-
-	if targetApp and targetApp:isFrontmost() then
-		if lastFocusedWindowOpenCode and lastFocusedWindowOpenCode:id() ~= frontmostWindow:id() then
-			lastFocusedWindowOpenCode:focus()
-		end
-	else
-		lastFocusedWindowOpenCode = frontmostWindow
-		if targetApp then
-			local win = targetApp:mainWindow()
-			if win then
-				win:focus()
-			end
-		else
-			hs.application.launchOrFocus(openCodeAppName)
-		end
-	end
-end)
-
-hs.hotkey.bind({ "cmd", "alt", "ctrl", "shift" }, "D", function()
+local focusPrevMonitor = function()
 	local win = hs.window.focusedWindow()
 	if not win then
 		return
@@ -132,9 +99,9 @@ hs.hotkey.bind({ "cmd", "alt", "ctrl", "shift" }, "D", function()
 			return
 		end
 	end
-end)
+end
 
-hs.hotkey.bind({ "cmd", "alt", "ctrl", "shift" }, "F", function()
+local focusNextMonitor = function()
 	local win = hs.window.focusedWindow()
 	if not win then
 		return
@@ -167,28 +134,36 @@ hs.hotkey.bind({ "cmd", "alt", "ctrl", "shift" }, "F", function()
 			return
 		end
 	end
-end)
-
--- =============================================================================
--- OpenCode Manager Integration
--- =============================================================================
-
--- Function to focus Ghostty - can be called via: hs -c 'focusGhostty()'
-local function focusGhostty()
-	local targetApp = hs.application.get(targetAppName)
-	local frontmostWindow = hs.window.frontmostWindow()
-	if not targetApp or not targetApp:isFrontmost() then
-		lastFocusedWindow = frontmostWindow
-		if targetApp then
-			local win = targetApp:mainWindow()
-			if win then
-				win:focus()
-			end
-		else
-			hs.application.launchOrFocus(targetAppName)
-		end
-	end
 end
 
--- Expose focusGhostty globally for IPC
-_G.focusGhostty = focusGhostty
+local movePrevMonitor = function()
+	local win = hs.window.focusedWindow()
+	if not win then
+		return
+	end
+
+	win:moveToScreen(win:screen():next())
+end
+
+local moveNextMonitor = function()
+	local win = hs.window.focusedWindow()
+	if not win then
+		return
+	end
+
+	win:moveToScreen(win:screen():previous())
+end
+
+-- AutoFill
+local windowFilter = hs.window.filter.new()
+windowFilter:subscribe(hs.window.filter.windowCreated, autoFill)
+
+hs.hotkey.bind({ "cmd", "alt", "ctrl", "shift" }, "tab", quakeTerminal)
+
+hs.hotkey.bind({ "cmd", "alt", "ctrl", "shift" }, "D", focusPrevMonitor)
+
+hs.hotkey.bind({ "cmd", "alt", "ctrl", "shift" }, "F", focusNextMonitor)
+
+hs.hotkey.bind({ "cmd", "alt", "ctrl", "shift" }, "E", movePrevMonitor)
+
+hs.hotkey.bind({ "cmd", "alt", "ctrl", "shift" }, "R", moveNextMonitor)
