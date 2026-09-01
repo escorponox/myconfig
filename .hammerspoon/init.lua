@@ -136,22 +136,47 @@ local focusNextMonitor = function()
 	end
 end
 
-local movePrevMonitor = function()
+local function orderedScreens()
+	local screens = hs.screen.allScreens()
+
+	table.sort(screens, function(a, b)
+		local af = a:frame()
+		local bf = b:frame()
+
+		if af.y == bf.y then
+			return af.x < bf.x
+		end
+
+		return af.y < bf.y
+	end)
+
+	return screens
+end
+
+local function moveMonitor(delta)
 	local win = hs.window.focusedWindow()
 	if not win then
 		return
 	end
 
-	win:moveToScreen(win:screen():next())
+	local screens = orderedScreens()
+	local current = win:screen()
+
+	for i, screen in ipairs(screens) do
+		if screen:id() == current:id() then
+			local nextIndex = ((i - 1 + delta) % #screens) + 1
+			win:moveToScreen(screens[nextIndex])
+			return
+		end
+	end
+end
+
+local movePrevMonitor = function()
+	moveMonitor(-1)
 end
 
 local moveNextMonitor = function()
-	local win = hs.window.focusedWindow()
-	if not win then
-		return
-	end
-
-	win:moveToScreen(win:screen():previous())
+	moveMonitor(1)
 end
 
 -- AutoFill
