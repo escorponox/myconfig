@@ -83,59 +83,6 @@ local quakeTerminal = function()
 	end
 end
 
-local focusPrevMonitor = function()
-	local win = hs.window.focusedWindow()
-	if not win then
-		return
-	end
-
-	local currentScreen = win:screen()
-	local nextScreen = currentScreen:next()
-
-	local windows = hs.window.orderedWindows()
-	for _, w in ipairs(windows) do
-		if w:screen() == nextScreen then
-			w:focus()
-			return
-		end
-	end
-end
-
-local focusNextMonitor = function()
-	local win = hs.window.focusedWindow()
-	if not win then
-		return
-	end
-
-	local currentScreen = win:screen()
-	local screens = hs.screen.allScreens()
-
-	-- Find the index of the current screen
-	local currentIndex
-	for i, screen in ipairs(screens) do
-		if screen == currentScreen then
-			currentIndex = i
-			break
-		end
-	end
-
-	-- Compute previous screen (wrap around)
-	local prevIndex = currentIndex - 1
-	if prevIndex < 1 then
-		prevIndex = #screens
-	end
-	local prevScreen = screens[prevIndex]
-
-	-- Focus the frontmost window on the previous screen
-	local windows = hs.window.orderedWindows()
-	for _, w in ipairs(windows) do
-		if w:screen() == prevScreen then
-			w:focus()
-			return
-		end
-	end
-end
-
 local function orderedScreens()
 	local screens = hs.screen.allScreens()
 
@@ -151,6 +98,125 @@ local function orderedScreens()
 	end)
 
 	return screens
+end
+
+-- Dedicated filter that spans ALL Mission Control Spaces. This is required when
+-- "Displays have separate Spaces" is on, otherwise windows living on other
+-- monitors' spaces are invisible to the default (current-space-only) filter.
+local screenFilter = hs.window.filter.new(true):setCurrentSpace(nil)
+
+-- Remember the last window focused on each screen, so that jumping to a monitor
+-- restores focus to the window you were actually using there. Global focus/z
+-- order is unreliable across separate Spaces and gets corrupted when an app has
+-- windows on several monitors (focusing one raises them all).
+local lastFocusedByScreen = {}
+
+screenFilter:subscribe(hs.window.filter.windowFocused, function(w)
+	local screen = w:screen()
+	if screen and w:isStandard() then
+		lastFocusedByScreen[screen:id()] = w
+	end
+end)
+
+-- Standard windows currently living on the given screen.
+local function windowsOnScreen(screen)
+	local result = {}
+	for _, w in ipairs(screenFilter:getWindows()) do
+		if w:isStandard() and w:screen():id() == screen:id() then
+			result[#result + 1] = w
+		end
+	end
+	return result
+end
+
+-- Focus a specific window reliably, even when its app has another window on a
+-- different monitor's Space. Plain window:focus() activates the app and lets
+-- macOS pick the app's "main" window (often on another monitor), so we force
+-- this exact window to become main/focused via the accessibility API.
+local function focusWindow(w)
+	-- Some apps (notably Chrome) revert our focus request ~1 runloop after we
+	-- write it, restoring their own "active" window when the app is activated —
+	-- badly across separate Spaces with windows on several monitors. So we assert
+	-- the focus, then RE-assert it shortly after, to get the last word.
+	local function assertFocus()
+		pcall(function()
+			local winElem = hs.axuielement.windowElement(w)
+			if winElem then
+				winElem:performAction("AXRaise")
+				winElem:setAttributeValue("AXMain", true)
+				winElem:setAttributeValue("AXFocused", true)
+			end
+			local appElem = hs.axuielement.applicationElement(w:application())
+			if appElem then
+				appElem:setAttributeValue("AXFrontmost", true)
+			end
+		end)
+	end
+
+	assertFocus()
+	hs.timer.doAfter(0.1, assertFocus)
+end
+
+-- Focus the last window used on the given screen, falling back to any window on
+-- it. Returns false when the screen has no focusable window.
+local function focusScreen(screen)
+	local windows = windowsOnScreen(screen)
+	if #windows == 0 then
+		return false
+	end
+
+	local tracked = lastFocusedByScreen[screen:id()]
+	local trackedId = tracked and tracked:id()
+	local target = windows[1]
+	for _, w in ipairs(windows) do
+		if trackedId and w:id() == trackedId then
+			target = w
+			break
+		end
+	end
+
+	focusWindow(target)
+	return true
+end
+
+local function focusMonitor(delta)
+	local win = hs.window.focusedWindow()
+	if not win then
+		return
+	end
+
+	local screens = orderedScreens()
+	if #screens < 2 then
+		return
+	end
+
+	local currentIndex
+	for i, screen in ipairs(screens) do
+		if screen:id() == win:screen():id() then
+			currentIndex = i
+			break
+		end
+	end
+	if not currentIndex then
+		return
+	end
+
+	-- Walk monitors in the requested direction, wrapping around and skipping the
+	-- current one, until we find a monitor that has a focusable window.
+	for step = 1, #screens - 1 do
+		local index = ((currentIndex - 1 + delta * step) % #screens) + 1
+		if focusScreen(screens[index]) then
+			return
+		end
+	end
+end
+
+local focusPrevMonitor = function()
+	focusMonitor(-1)
+end
+
+local focusNextMonitor = function()
+	focusMonitor(1)
 end
 
 local function moveMonitor(delta)
