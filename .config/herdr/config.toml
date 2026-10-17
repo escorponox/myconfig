@@ -1,0 +1,42 @@
+# herdr configuration: only values that differ from the defaults.
+# Full reference with every option and its default: `herdr --default-config`.
+
+onboarding = false
+
+[theme]
+name = "catppuccin-latte"
+
+[keys]
+previous_workspace = "prefix+p"
+next_workspace = "prefix+n"
+previous_agent = "prefix+up"
+next_agent = "prefix+down"
+previous_tab = "prefix+shift+tab"
+next_tab = "prefix+tab"
+cycle_pane_next = "prefix+o"
+cycle_pane_previous = "prefix+shift+o"
+toggle_sidebar = "prefix+shift+b"
+
+# Focus the latest blocked/done agent, even after its toast expired.
+[[keys.command]]
+key = "prefix+b"
+type = "shell"
+command = "~/.config/herdr/scripts/focus-last-notified.sh"
+
+[ui]
+prompt_new_tab_name = false
+show_agent_labels_on_pane_borders = true
+tab_bar_position = "bottom"
+tab_bar_right = [
+  { type = "zoom" },
+  { type = "datetime", format = "%b %d %H:%M" },
+]
+
+[ui.toast]
+delivery = "herdr"
+
+[ui.sidebar.spaces]
+row_gap = 1
+
+[experimental]
+pane_history = false
